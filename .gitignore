@@ -1,0 +1,15 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Local raw downloads / probes
+_probe/
+*.raw.json
+data/allCards.raw.json
+data/allPops.raw.json
+scripts/__pycache__/
+__pycache__/
+*.pyc

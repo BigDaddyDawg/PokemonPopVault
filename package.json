@@ -1,0 +1,10 @@
+{
+  "name": "pokemon-pop-vault",
+  "private": true,
+  "description": "Gallery of every Pokémon Funko Pop! ever released",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "refresh-data": "python scripts/refresh_data.py",
+    "refresh-coming-soon": "python scripts/refresh_coming_soon.py"
+  }
+}

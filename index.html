@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Poké Pop Vault — a gallery of every Pokémon Funko Pop! ever released." />
+  <meta name="theme-color" content="#0a1628" />
+  <title>Poké Pop Vault · Pokémon Funko Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&family=Russo+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23e62829'/%3E%3Cpath d='M4 32h56' stroke='%231a1a1a' stroke-width='4'/%3E%3Cpath d='M4 32a28 28 0 0 0 56 0' fill='%23f7f7f7'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23f7f7f7' stroke='%231a1a1a' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%231a1a1a'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <canvas id="stars"></canvas>
+    <div class="aurora aurora-a"></div>
+    <div class="aurora aurora-b"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">A private vault · for his collection</p>
+      <h1 class="brand">Poké Pop Vault</h1>
+      <p class="tagline">Every Pokémon Funko Pop!, waiting on the shelf.</p>
+      <a class="cta" href="#collection">Open the vault</a>
+    </div>
+    <div class="hero-glow" aria-hidden="true"></div>
+  </header>
+
+  <nav class="tabs" aria-label="Gallery sections">
+    <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">The Collection</button>
+    <button type="button" class="tab" data-tab="coming" id="tabComing">Coming Soon</button>
+  </nav>
+
+  <div id="panelCollection">
+  <section class="favorites" aria-label="Favorite Pokémon">
+    <div class="section-head">
+      <h2>Caught on the radar</h2>
+      <p>Jump straight to the species that matter most.</p>
+    </div>
+    <div class="fav-grid" id="favGrid">
+      <button class="fav-card fav-pika" type="button" data-story="Pikachu">
+        <span class="fav-art" id="favArtPika"></span>
+        <span class="fav-copy">
+          <span class="fav-kicker">Gotta catch…</span>
+          <span class="fav-title">Pikachu</span>
+        </span>
+      </button>
+      <button class="fav-card fav-eevee" type="button" data-story="Eevee">
+        <span class="fav-art" id="favArtEevee"></span>
+        <span class="fav-copy">
+          <span class="fav-kicker">Eeveelutions</span>
+          <span class="fav-title">Eevee</span>
+        </span>
+      </button>
+      <button class="fav-card fav-char" type="button" data-story="Charizard">
+        <span class="fav-art" id="favArtChar"></span>
+        <span class="fav-copy">
+          <span class="fav-kicker">Flame on</span>
+          <span class="fav-title">Charizard</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <main id="collection" class="gallery">
+    <div class="section-head">
+      <h2>The Full Collection</h2>
+      <p id="countLabel">Loading every released Pop!…</p>
+    </div>
+
+    <div class="filters" id="filters">
+      <label class="search-wrap">
+        <span class="sr-only">Search pops</span>
+        <input id="search" type="search" placeholder="Search by name or variant…" autocomplete="off" />
+      </label>
+      <label>
+        <span>Series</span>
+        <select id="setFilter">
+          <option value="">All series</option>
+        </select>
+      </label>
+      <label>
+        <span>Variant</span>
+        <select id="rarityFilter">
+          <option value="">All variants</option>
+        </select>
+      </label>
+      <label>
+        <span>Pokémon</span>
+        <select id="storyFilter">
+          <option value="">All Pokémon</option>
+        </select>
+      </label>
+      <button type="button" class="clear-btn" id="clearFilters">Clear</button>
+    </div>
+
+    <div class="active-pills" id="activePills" hidden></div>
+    <div class="grid" id="cardGrid" aria-live="polite"></div>
+    <div class="sentinel" id="sentinel" aria-hidden="true"></div>
+    <p class="empty" id="emptyState" hidden>No Pops match that search. Try another trainer tip.</p>
+  </main>
+  </div>
+
+  <section id="panelComing" class="coming" hidden>
+    <div class="section-head">
+      <h2>Coming Soon</h2>
+      <p id="comingStatus">Scouting the next wave of Pop! Pokémon…</p>
+      <button type="button" class="refresh-btn" id="comingRefresh">Refresh news &amp; reveals</button>
+    </div>
+
+    <div class="coming-block">
+      <h3 class="coming-label">Next waves on the horizon</h3>
+      <div class="set-rail" id="upcomingSets"></div>
+    </div>
+
+    <div class="coming-block">
+      <h3 class="coming-label">Fresh from the shop floor</h3>
+      <div class="news-list" id="newsList"></div>
+    </div>
+
+    <div class="coming-block">
+      <h3 class="coming-label">Newly spotted Pops</h3>
+      <p class="coming-note" id="revealsNote">As new Pokémon Pops hit the shop, they’ll appear here.</p>
+      <div class="grid" id="revealsGrid"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Poké Pop Vault · fan gallery · data via PriceCharting, Funko.com &amp; community checklists</p>
+    <p class="fine">Pokémon and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Game Freak, or Funko.</p>
+  </footer>
+
+  <dialog class="modal" id="cardModal">
+    <div class="modal-shell">
+      <button type="button" class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <div class="modal-art">
+        <img id="modalImg" alt="" />
+        <div class="modal-sparkle" aria-hidden="true"></div>
+      </div>
+      <div class="modal-meta">
+        <p class="modal-story" id="modalStory"></p>
+        <h3 id="modalName"></h3>
+        <p class="modal-version" id="modalVersion"></p>
+        <dl class="modal-facts">
+          <div>
+            <dt>Variant</dt>
+            <dd id="modalRarity"></dd>
+          </div>
+          <div>
+            <dt>Series</dt>
+            <dd id="modalSet"></dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd id="modalType"></dd>
+          </div>
+          <div>
+            <dt>Exclusive</dt>
+            <dd id="modalColor"></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

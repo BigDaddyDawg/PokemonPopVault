@@ -1,0 +1,94 @@
+{
+  "generated": "2026-08-03T15:40:16Z",
+  "sources": {
+    "catalog": "PriceCharting + curated Pop! Pokémon checklist",
+    "news": "https://funko.com/blog/",
+    "shop": "https://funko.com/search?q=pokemon"
+  },
+  "upcomingSets": [
+    {
+      "code": "LEGENDARY-BEASTS",
+      "name": "Legendary Beasts Jumbo Wave",
+      "releaseDate": null,
+      "type": "wave",
+      "number": 1,
+      "blurb": "Jumbo Suicune, Entei, and Raikou have been hitting conventions and retailer exclusives — watch for wider restocks.",
+      "productUrl": "https://funko.com/search?q=pokemon",
+      "gallery": [
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw35c7fae7/images/funko/upload/1/93995_Pokemon_Charmeleon_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc775685b/images/funko/upload/1/92307-POKEMON-COUNTDOWN-CALENDAR_GLAM-2-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw049c6b95/images/funko/upload/1/92306_Bitty_POP_DSPLY_Poke_Ball_Display_Glam-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw8e820330/images/funko/upload/1/91988_Pokemon_Ivysaur_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb2f467fa/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM_1-GS-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfadeb346/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM-WEB.png?sw=800&sh=800"
+      ],
+      "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw35c7fae7/images/funko/upload/1/93995_Pokemon_Charmeleon_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+      "revealedCount": 6,
+      "hasAllCards": false
+    },
+    {
+      "code": "PALDEA-KALOS",
+      "name": "Paldea & Friends",
+      "releaseDate": null,
+      "type": "wave",
+      "number": 2,
+      "blurb": "Newer species like Ceruledge, Fidough, Fuecoco, and Quaxly continue to expand the Pop! Pokémon shelf.",
+      "productUrl": "https://funko.com/search?q=pokemon+pop",
+      "gallery": [
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw35c7fae7/images/funko/upload/1/93995_Pokemon_Charmeleon_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc775685b/images/funko/upload/1/92307-POKEMON-COUNTDOWN-CALENDAR_GLAM-2-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw049c6b95/images/funko/upload/1/92306_Bitty_POP_DSPLY_Poke_Ball_Display_Glam-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw8e820330/images/funko/upload/1/91988_Pokemon_Ivysaur_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb2f467fa/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM_1-GS-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfadeb346/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM-WEB.png?sw=800&sh=800"
+      ],
+      "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw35c7fae7/images/funko/upload/1/93995_Pokemon_Charmeleon_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+      "revealedCount": 6,
+      "hasAllCards": false
+    }
+  ],
+  "reveals": [
+    {
+      "id": "funko-92410",
+      "fullName": "Pop! Lycanroc (Midday Form)",
+      "name": "Lycanroc",
+      "version": "Midday Form",
+      "rarity": "Coming Soon",
+      "setCode": "SOON",
+      "setName": "Coming Soon",
+      "story": "Lycanroc",
+      "type": "Pop!",
+      "color": "",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw31604c7a/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw31604c7a/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+      "isExternalReveal": true,
+      "url": null
+    },
+    {
+      "id": "funko-92411",
+      "fullName": "Pop! Lycanroc (Midnight Form)",
+      "name": "Lycanroc",
+      "version": "Midnight Form",
+      "rarity": "Coming Soon",
+      "setCode": "SOON",
+      "setName": "Coming Soon",
+      "story": "Lycanroc",
+      "type": "Pop!",
+      "color": "",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf837d1e1/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf837d1e1/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+      "isExternalReveal": true,
+      "url": null
+    }
+  ],
+  "news": [
+    {
+      "title": "SDCC Limited Edition Pokémon Team Rocket Cameo Mini Backpack",
+      "date": "",
+      "category": "News",
+      "summary": "$90.00 Quantity selection will refresh the page",
+      "url": "https://funko.com/blog/",
+      "image": null
+    }
+  ]
+}
