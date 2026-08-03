@@ -49,11 +49,31 @@ def slugify(s: str) -> str:
     return s
 
 
-def classify_type(version: str, title: str = "", slug: str = "") -> str:
+def checklist_jumbo_numbers() -> set[int]:
+    nums: set[int] = set()
+    for number, _name, version, _exclusive in CHECKLIST:
+        if number and re.search(r"10\s*inch|18\s*inch|jumbo", version or "", re.I):
+            nums.add(number)
+    return nums
+
+
+def checklist_pearlescent_numbers() -> set[int]:
+    return {
+        number
+        for number, _name, version, _exclusive in CHECKLIST
+        if number and re.search(r"pearlescent", version or "", re.I)
+    }
+
+
+JUMBO_NUMBERS = checklist_jumbo_numbers()
+PEARLESCENT_NUMBERS = checklist_pearlescent_numbers()
+
+
+def classify_type(version: str, title: str = "", slug: str = "", number: int | None = None) -> str:
     blob = f"{version} {title} {slug}".lower().replace("-", " ")
-    if "18 inch" in blob:
+    if number == 951 or "18 inch" in blob:
         return "Super Jumbo"
-    if "10 inch" in blob or "jumbo" in blob:
+    if number in JUMBO_NUMBERS or "10 inch" in blob or "jumbo" in blob:
         return "Jumbo"
     if "bitty" in blob:
         return "Bitty Pop"
@@ -64,8 +84,8 @@ def classify_type(version: str, title: str = "", slug: str = "") -> str:
     return "Pop!"
 
 
-def classify_rarity(version: str, exclusive: str) -> str:
-    blob = f"{version} {exclusive}".lower()
+def classify_rarity(version: str, exclusive: str, slug: str = "", number: int | None = None) -> str:
+    blob = f"{version} {exclusive} {slug}".lower().replace("-", " ")
     for key, label in [
         ("flocked", "Flocked"),
         ("diamond", "Diamond"),
@@ -76,9 +96,44 @@ def classify_rarity(version: str, exclusive: str) -> str:
     ]:
         if key in blob:
             return label
+    # Pokémon Center exclusives in this line are the pearlescent run.
+    if number in PEARLESCENT_NUMBERS and "pokemon center" in blob:
+        return "Pearlescent"
     if exclusive.strip():
         return "Exclusive"
     return "Shared"
+
+
+def finish_key(card: dict) -> str:
+    if "jumbo" in (card.get("type") or "").lower():
+        return "Jumbo"
+    rarity = card.get("rarity") or "Shared"
+    if rarity in {"Shared", "Exclusive"}:
+        return "Standard"
+    return rarity
+
+
+def card_keep_score(card: dict) -> tuple:
+    """Higher is better when collapsing twins."""
+    version = card.get("version") or ""
+    slug = ""
+    if card.get("url"):
+        slug = card["url"].rsplit("/", 1)[-1]
+    specific = 0
+    if version and version != card.get("fullName") and not re.fullmatch(r".+#\d+", version):
+        specific = 2
+    if re.search(
+        r"10 inch|flocked|diamond|metallic|pearlescent|soft color|nycc|sdcc|eccc|special",
+        f"{version} {slug}",
+        re.I,
+    ):
+        specific += 3
+    return (
+        specific,
+        1 if card.get("source") == "pricecharting" else 0,
+        len(version),
+        -(card.get("id") or 0),
+    )
 
 
 def set_code_for(pop_type: str) -> str:
@@ -374,12 +429,20 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
         if not row.get("thumb"):
             continue
         name, version, exclusive, number = match_checklist(row)
-        pop_type = classify_type(version, row["title"], row.get("slug", ""))
-        rarity = classify_rarity(version, exclusive)
+        slug = row.get("slug") or ""
+        pop_type = classify_type(version, row["title"], slug, number)
+        rarity = classify_rarity(version, exclusive, slug, number)
         # Prefer slug-derived specialty over retailer-only version labels
         if exclusive and version == exclusive:
             version = ""
         display_version = version or exclusive or ""
+        if rarity in {"Flocked", "Diamond", "Metallic", "Pearlescent", "Soft Color"} and not display_version:
+            display_version = rarity
+        if pop_type in {"Jumbo", "Super Jumbo"} and "inch" not in display_version.lower():
+            display_version = ("18 inch" if pop_type == "Super Jumbo" else "10 inch") + (
+                f" {display_version}" if display_version else ""
+            )
+            display_version = display_version.strip()
         sc = set_code_for(pop_type)
         full_name = f"{name}{f' ({display_version})' if display_version else ''}"
         if number:
@@ -424,8 +487,8 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
             # Charmeleon etc may be in checklist with number 0
             if slugify(name) not in {slugify(n) for _, n, _, _ in CHECKLIST}:
                 continue
-        pop_type = classify_type(version, fr["name"])
-        rarity = classify_rarity(version, "")
+        pop_type = classify_type(version, fr["name"], number=None)
+        rarity = classify_rarity(version, "", fr.get("name") or "", None)
         # Skip shop listings that only restate a Pokémon already in the catalog.
         # Plain "Pop! Squirtle" duplicates Squirtle #504; keep only true new finishes.
         name_s = slugify(name)
@@ -473,51 +536,58 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
     return cards
 
 
-def _is_plain_standard(card: dict) -> bool:
-    rarity = (card.get("rarity") or "").lower()
-    version = (card.get("version") or "").lower()
-    if rarity not in {"shared", "exclusive", ""}:
-        return False
-    specialty = ("flocked", "diamond", "metallic", "pearlescent", "soft color", "soft-color")
-    return not any(tok in version for tok in specialty)
-
-
 def dedupe_cards(cards: list[dict]) -> list[dict]:
-    """Drop common catalogue twins (shop restates + bare entries under jumbo numbers)."""
-    jumbo_nums = {
-        c.get("number")
-        for c in cards
-        if c.get("number") and "jumbo" in (c.get("type") or "").lower()
-    }
-    out: list[dict] = []
-    seen: set[tuple] = set()
+    """Collapse catalogue twins so each number+species+finish appears once."""
+    # Force checklist jumbo numbers into Jumbo even when PC omits "10 inch" in the slug.
     for c in cards:
         number = c.get("number")
-        # PriceCharting sometimes lists a bare Pop under the jumbo number as well.
-        if number in jumbo_nums and (c.get("type") or "") == "Pop!" and _is_plain_standard(c):
-            continue
+        if number in JUMBO_NUMBERS and "jumbo" not in (c.get("type") or "").lower():
+            # Keep special finishes as regular-size variants that share a number with a jumbo.
+            if (c.get("rarity") or "") in {
+                "Flocked",
+                "Diamond",
+                "Metallic",
+                "Pearlescent",
+                "Soft Color",
+            }:
+                continue
+            c["type"] = "Super Jumbo" if number == 951 else "Jumbo"
+            c["setCode"] = set_code_for(c["type"])
+            c["setName"] = set_name_for(c["setCode"])
+            if "inch" not in (c.get("version") or "").lower():
+                label = "18 inch" if number == 951 else "10 inch"
+                ver = c.get("version") or ""
+                if ver == c.get("fullName"):
+                    ver = ""
+                c["version"] = f"{label}{f' {ver}' if ver else ''}".strip()
+                c["fullName"] = f"{c['name']} ({c['version']})" + (
+                    f" #{number}" if number else ""
+                )
 
-        finish = c.get("rarity") or "Shared"
-        finish_key = "Standard" if finish in {"Shared", "Exclusive"} else finish
-        version = c.get("version") or ""
-        version_key = re.sub(
-            r"\b(target|gamestop|amazon|hot topic|funko shop|pokemon center|"
-            r"only at|special edition|nycc|sdcc|summer convention)\b",
-            "",
-            version,
-            flags=re.I,
-        )
-        identity = (
-            number,
-            slugify(c.get("name") or ""),
-            slugify(c.get("type") or ""),
-            slugify(finish_key),
-            slugify(version_key),
-        )
-        if identity in seen:
+    # Keep the richest row for each number + species + finish bucket.
+    best: dict[tuple, dict] = {}
+    numberless: list[dict] = []
+    for c in cards:
+        number = c.get("number")
+        if number is None:
+            numberless.append(c)
             continue
-        seen.add(identity)
+        key = (number, slugify(c.get("name") or ""), finish_key(c))
+        prev = best.get(key)
+        if prev is None or card_keep_score(c) > card_keep_score(prev):
+            best[key] = c
+
+    out = list(best.values())
+
+    # Numberless Funko rows only if no same species+finish exists.
+    existing = {(slugify(c.get("name") or ""), finish_key(c)) for c in out}
+    for c in numberless:
+        key = (slugify(c.get("name") or ""), finish_key(c))
+        if key in existing:
+            continue
         out.append(c)
+        existing.add(key)
+
     return out
 
 
