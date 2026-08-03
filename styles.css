@@ -194,6 +194,7 @@ body {
 .tabs {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.6rem;
   padding: 0 1rem 1.5rem;
   position: sticky;
@@ -227,6 +228,22 @@ body {
   border-color: transparent;
   background: linear-gradient(135deg, var(--gold-soft), var(--gold) 50%, var(--honey));
   box-shadow: 0 10px 28px rgba(232, 197, 106, 0.28);
+}
+
+.tab-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.35rem;
+  margin-left: 0.35rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(10, 22, 40, 0.22);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.tab.is-active .tab-count {
+  background: rgba(26, 18, 8, 0.18);
 }
 
 .tab-count {
@@ -373,7 +390,7 @@ body {
 /* —— Filters —— */
 .filters {
   display: grid;
-  grid-template-columns: 1.6fr repeat(3, 1fr) auto;
+  grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr)) auto;
   gap: 0.75rem;
   align-items: end;
   padding: 1rem;
@@ -574,9 +591,11 @@ body {
 
 .card-badge {
   position: absolute;
-  left: 0.3rem;
-  top: 0.3rem;
-  max-width: calc(100% - 2.4rem);
+  left: auto;
+  right: 0.3rem;
+  top: auto;
+  bottom: 2.35rem;
+  max-width: calc(100% - 0.6rem);
   padding: 0.12rem 0.35rem;
   border-radius: 999px;
   font-size: 0.55rem;
@@ -617,6 +636,53 @@ body {
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
+.own-btn {
+  position: absolute;
+  top: 0.3rem;
+  left: 0.3rem;
+  z-index: 3;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(110, 214, 208, 0.35);
+  border-radius: 999px;
+  padding: 0;
+  cursor: pointer;
+  color: #9be7e2;
+  background: rgba(8, 16, 30, 0.72);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.own-btn svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.own-btn:hover,
+.own-btn:focus-visible {
+  transform: scale(1.08);
+  color: #c9fffb;
+  border-color: rgba(110, 214, 208, 0.7);
+  outline: none;
+}
+
+.own-btn.is-on {
+  color: #062824;
+  border-color: transparent;
+  background: linear-gradient(135deg, #b8fff8, #6ed6d0 55%, #3aa8a2);
+}
+
+.card-wrap.is-owned .card {
+  box-shadow: inset 0 0 0 2px rgba(110, 214, 208, 0.55);
+}
+
+.card-wrap.is-owned .card img {
+  filter: saturate(1.05);
+}
+
 .wish-btn svg {
   width: 0.85rem;
   height: 0.85rem;
@@ -647,6 +713,7 @@ body {
 
 .wish-filters {
   margin-bottom: 1.25rem;
+  grid-template-columns: 1fr;
 }
 
 .wish-toggle {
@@ -673,6 +740,21 @@ body {
   color: #1a1208;
   border-color: transparent;
   background: linear-gradient(135deg, var(--gold-soft), var(--gold) 50%, var(--honey));
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.modal-actions .wish-toggle {
+  margin-top: 0;
+}
+
+@media (max-width: 560px) {
+  .modal-actions { grid-template-columns: 1fr; }
 }
 
 @keyframes cardIn {

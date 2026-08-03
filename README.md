@@ -15,6 +15,14 @@ Same pattern as Toploader — open the live site in your phone browser, then:
 
 It opens fullscreen like a native app (standalone display + offline shell via service worker).
 
+## Owned & wishlist
+
+Tracking stays on the phone (localStorage):
+
+- **Checkmark** — mark a Pop as owned (also removes it from the wishlist)
+- **Heart** — add to wishlist
+- Tabs: **Owned** and **Wishlist**, plus a catalogue **Shelf** filter (Owned / Not owned / On wishlist)
+
 ## Local
 
 Open `index.html` via a local static server (needed so `data/cards.json` can load):

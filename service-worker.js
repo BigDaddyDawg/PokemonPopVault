@@ -1,4 +1,4 @@
-const CACHE_NAME = "poke-pop-vault-static-v2";
+const CACHE_NAME = "poke-pop-vault-static-v3";
 const CORE_ASSETS = [
   "./",
   "index.html",

@@ -10,9 +10,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Pop Vault" />
   <title>Poké Pop Vault · Pokémon Funko Gallery</title>
-  <link rel="manifest" href="manifest.webmanifest?v=2" />
-  <link rel="icon" href="icon.svg?v=2" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2" />
+  <link rel="manifest" href="manifest.webmanifest?v=3" />
+  <link rel="icon" href="icon.svg?v=3" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&family=Russo+One&display=swap" rel="stylesheet" />
@@ -37,7 +37,9 @@
   </header>
 
   <nav class="tabs" aria-label="Gallery sections">
-    <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">The Collection</button>
+    <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">Catalogue</button>
+    <button type="button" class="tab" data-tab="owned" id="tabOwned">Owned <span class="tab-count" id="ownedTabCount" hidden>0</span></button>
+    <button type="button" class="tab" data-tab="wishlist" id="tabWishlist">Wishlist <span class="tab-count" id="wishTabCount" hidden>0</span></button>
     <button type="button" class="tab" data-tab="coming" id="tabComing">Coming Soon</button>
   </nav>
 
@@ -101,6 +103,15 @@
           <option value="">All Pokémon</option>
         </select>
       </label>
+      <label>
+        <span>Shelf</span>
+        <select id="ownFilter">
+          <option value="">All Pops</option>
+          <option value="owned">Owned</option>
+          <option value="missing">Not owned</option>
+          <option value="wishlist">On wishlist</option>
+        </select>
+      </label>
       <button type="button" class="clear-btn" id="clearFilters">Clear</button>
     </div>
 
@@ -110,6 +121,36 @@
     <p class="empty" id="emptyState" hidden>No Pops match that search. Try another trainer tip.</p>
   </main>
   </div>
+
+  <section id="panelOwned" class="gallery wishlist" hidden>
+    <div class="section-head">
+      <h2>Owned</h2>
+      <p id="ownedCountLabel">Pops on his shelf — saved on this phone.</p>
+    </div>
+    <div class="filters wish-filters">
+      <label class="search-wrap">
+        <span class="sr-only">Search owned pops</span>
+        <input id="ownedSearch" type="search" placeholder="Search owned Pops…" autocomplete="off" />
+      </label>
+    </div>
+    <div class="grid grid-compact" id="ownedGrid" aria-live="polite"></div>
+    <p class="empty" id="ownedEmpty" hidden>No owned Pops yet. Tap the checkmark on any Pop to mark it owned.</p>
+  </section>
+
+  <section id="panelWishlist" class="gallery wishlist" hidden>
+    <div class="section-head">
+      <h2>Wishlist</h2>
+      <p id="wishCountLabel">Pops he still wants — saved on this phone.</p>
+    </div>
+    <div class="filters wish-filters">
+      <label class="search-wrap">
+        <span class="sr-only">Search wishlist</span>
+        <input id="wishSearch" type="search" placeholder="Search wishlist…" autocomplete="off" />
+      </label>
+    </div>
+    <div class="grid grid-compact" id="wishGrid" aria-live="polite"></div>
+    <p class="empty" id="wishEmpty" hidden>Wishlist is empty. Tap the heart on any Pop to save it here.</p>
+  </section>
 
   <section id="panelComing" class="coming" hidden>
     <div class="section-head">
@@ -169,6 +210,10 @@
             <dd id="modalColor"></dd>
           </div>
         </dl>
+        <div class="modal-actions">
+          <button type="button" class="wish-toggle" id="modalOwn" aria-pressed="false">Mark owned</button>
+          <button type="button" class="wish-toggle" id="modalWish" aria-pressed="false">Add to wishlist</button>
+        </div>
       </div>
     </div>
   </dialog>
@@ -178,7 +223,7 @@
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("service-worker.js?v=2")
+          .register("service-worker.js?v=3")
           .then((reg) => {
             if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
             reg.update().catch(() => {});
