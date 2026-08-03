@@ -1,0 +1,34 @@
+name: Refresh Catalog Weekly
+
+on:
+  schedule:
+    # Every Monday 15:00 UTC — full catalogue + coming-soon
+    - cron: "0 15 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh full catalogue
+        run: python scripts/refresh_data.py
+      - name: Refresh coming-soon
+        run: python scripts/refresh_coming_soon.py
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cards.json data/coming-soon.json || true
+          if git diff --staged --quiet; then
+            echo "No catalogue changes"
+          else
+            git commit -m "Weekly catalogue refresh"
+            git push
+          fi

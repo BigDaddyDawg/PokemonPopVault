@@ -17,7 +17,7 @@ It opens fullscreen like a native app (standalone display + offline shell via se
 
 ## Owned & wishlist
 
-Tracking stays on the phone (localStorage):
+Wishlists and owned lists sync to the **Family Vault** (shared Supabase hub) so phones in the family stay in sync. A local cache is kept for offline use.
 
 - **Checkmark** — mark a Pop as owned (also removes it from the wishlist)
 - **Heart** — add to wishlist
@@ -49,7 +49,7 @@ Sources of truth:
 
 Refresh behavior:
 - When you open **Coming Soon**, the app reloads `data/coming-soon.json` and tries a **live** pull of blog headlines
-- GitHub Actions also refreshes the snapshot twice a week (Sun/Wed) — or run locally:
+- GitHub Actions also refreshes the snapshot twice a week (Sun/Wed), plus a **full catalogue refresh every Monday** — or run locally:
 
 ```powershell
 python scripts/refresh_coming_soon.py

@@ -102,6 +102,10 @@
   /** @type {string | null} */
   let modalCardId = null;
   let activeTab = "collection";
+  /** @type {ReturnType<typeof window.FamilyListSync.create> | null} */
+  let wishSync = null;
+  /** @type {ReturnType<typeof window.FamilyListSync.create> | null} */
+  let ownedSync = null;
 
   initStars();
   loadWishlist();
@@ -113,6 +117,7 @@
       const res = await fetch("./data/cards.json");
       if (!res.ok) throw new Error(`Failed to load catalog (${res.status})`);
       catalog = await res.json();
+      await initFamilyVault();
       fillFilters();
       paintFavorites();
       bindUI();
@@ -123,6 +128,38 @@
       els.countLabel.textContent = "The vault wouldn’t open. Try refreshing.";
       console.error(err);
     }
+  }
+
+  async function initFamilyVault() {
+    if (!window.FamilyListSync?.create) return;
+    wishSync = window.FamilyListSync.create({
+      app: "pokepopvault",
+      listType: "wishlist",
+      storageKey: WISHLIST_KEY,
+      onRemoteChange: (ids) => {
+        wishlist = new Set(ids.map(String));
+        updateTrackerChrome();
+        applyFilters();
+        if (activeTab === "wishlist") renderWishlist();
+        if (modalCardId) syncModalWishBtn();
+      },
+    });
+    ownedSync = window.FamilyListSync.create({
+      app: "pokepopvault",
+      listType: "owned",
+      storageKey: OWNED_KEY,
+      onRemoteChange: (ids) => {
+        owned = new Set(ids.map(String));
+        updateTrackerChrome();
+        applyFilters();
+        if (activeTab === "owned") renderOwned();
+        if (modalCardId) syncModalOwnBtn();
+      },
+    });
+    wishlist = await wishSync.hydrate(wishlist);
+    owned = await ownedSync.hydrate(owned);
+    wishSync.subscribe();
+    ownedSync.subscribe();
   }
 
   function loadWishlist() {
@@ -172,6 +209,7 @@
     if (wishlist.has(key)) wishlist.delete(key);
     else wishlist.add(key);
     saveWishlist();
+    if (wishSync) wishSync.setItem(key, wishlist.has(key));
     syncWishButtons(key);
     updateTrackerChrome();
     if (activeTab === "wishlist") renderWishlist();
@@ -188,10 +226,12 @@
       if (wishlist.has(key)) {
         wishlist.delete(key);
         saveWishlist();
+        if (wishSync) wishSync.setItem(key, false);
         syncWishButtons(key);
       }
     }
     saveOwned();
+    if (ownedSync) ownedSync.setItem(key, owned.has(key));
     syncOwnButtons(key);
     updateTrackerChrome();
     if (activeTab === "owned") renderOwned();
@@ -439,14 +479,14 @@
     if (els.wishCountLabel) {
       els.wishCountLabel.textContent =
         wishN === 0
-          ? "Pops he still wants — saved on this phone."
+          ? "Shared family wishlist — same list on every phone."
           : `${wishN.toLocaleString()} Pop${wishN === 1 ? "" : "s"} on the wishlist.`;
     }
     if (els.ownedCountLabel) {
       const total = catalog.count || catalog.cards.length || 0;
       els.ownedCountLabel.textContent =
         ownedN === 0
-          ? "Pops on his shelf — saved on this phone."
+          ? "Shared family shelf — anyone can tick these off."
           : `${ownedN.toLocaleString()} owned${total ? ` of ${total.toLocaleString()}` : ""} · ${
               total ? Math.round((ownedN / total) * 100) : 0
             }% of the catalogue.`;
