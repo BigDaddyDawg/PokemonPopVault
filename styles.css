@@ -450,10 +450,59 @@ body {
 }
 
 /* —— Card grid —— */
+.catalog {
+  display: grid;
+  gap: 2rem;
+}
+
+.finish-block {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.finish-head {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.finish-label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3.5vw, 1.9rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--gold-soft);
+}
+
+.finish-count {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  vertical-align: middle;
+  color: var(--muted);
+}
+
+.finish-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
   gap: 1rem;
+}
+
+.grid-compact {
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 0.55rem;
 }
 
 .card-wrap {
@@ -468,7 +517,7 @@ body {
   padding: 0;
   background: transparent;
   cursor: pointer;
-  border-radius: 14px;
+  border-radius: 10px;
   overflow: hidden;
   aspect-ratio: 3 / 4;
   transform: translateZ(0);
@@ -479,8 +528,8 @@ body {
 .card-wrap:focus-within .card,
 .card:hover,
 .card:focus-visible {
-  transform: translateY(-7px) scale(1.02);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(232, 197, 106, 0.45);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 203, 5, 0.45);
   outline: none;
   z-index: 2;
 }
@@ -493,22 +542,52 @@ body {
   background: linear-gradient(160deg, #15233a, #0b1424);
 }
 
+.card-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 1.4rem 0.35rem 0.35rem;
+  display: grid;
+  gap: 0.05rem;
+  background: linear-gradient(180deg, transparent, rgba(5, 10, 20, 0.92) 55%);
+  text-align: left;
+}
+
+.card-num {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--gold-soft);
+}
+
+.card-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #f4f7ff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .card-badge {
   position: absolute;
-  left: 0.45rem;
-  bottom: 0.45rem;
-  max-width: calc(100% - 0.9rem);
-  padding: 0.2rem 0.45rem;
+  left: 0.3rem;
+  top: 0.3rem;
+  max-width: calc(100% - 2.4rem);
+  padding: 0.12rem 0.35rem;
   border-radius: 999px;
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #1a1208;
   background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0.92;
+  transform: none;
+  transition: opacity 0.25s ease;
 }
 
 .card-wrap:hover .card-badge,
@@ -516,19 +595,18 @@ body {
 .card:hover .card-badge,
 .card:focus-visible .card-badge {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .wish-btn {
   position: absolute;
-  top: 0.4rem;
-  right: 0.4rem;
+  top: 0.3rem;
+  right: 0.3rem;
   z-index: 3;
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 1.7rem;
+  height: 1.7rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(232, 197, 106, 0.35);
+  border: 1px solid rgba(255, 203, 5, 0.35);
   border-radius: 999px;
   padding: 0;
   cursor: pointer;
@@ -540,8 +618,8 @@ body {
 }
 
 .wish-btn svg {
-  width: 1.05rem;
-  height: 1.05rem;
+  width: 0.85rem;
+  height: 0.85rem;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
@@ -967,6 +1045,7 @@ body {
 
 @media (max-width: 560px) {
   .grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  .grid-compact { grid-template-columns: repeat(3, 1fr); gap: 0.45rem; }
   .filters { grid-template-columns: 1fr; }
 }
 

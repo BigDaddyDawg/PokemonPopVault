@@ -1,8 +1,25 @@
 (() => {
   const PAGE_SIZE = 48;
-  const WISHLIST_KEY = "enchantedink_wishlist_v1";
+  const WISHLIST_KEY = "pokepopvault_wishlist_v1";
   const NEWS_URL = "https://funko.com/blog/";
   const LIVE_NEWS_URL = "https://r.jina.ai/http://funko.com/blog/";
+  /** Funko finish groups — Shared/Exclusive count as Standard. */
+  const FINISH_ORDER = [
+    "Standard",
+    "Flocked",
+    "Diamond",
+    "Metallic",
+    "Pearlescent",
+    "Soft Color",
+  ];
+  const FINISH_BLURBS = {
+    Standard: "Regular Pop! releases (including common retailer exclusives)",
+    Flocked: "Fuzzy flocked finishes",
+    Diamond: "Diamond Collection sparkle",
+    Metallic: "Metallic paint finishes",
+    Pearlescent: "Pearlescent Pokémon Center finishes",
+    "Soft Color": "Soft Color pastel finishes",
+  };
   const FAV_PICKS = {
     Pikachu: ["Pikachu"],
     Eevee: ["Eevee"],
@@ -130,10 +147,10 @@
       opt.textContent = set.name;
       els.setFilter.appendChild(opt);
     }
-    for (const rarity of catalog.rarities) {
+    for (const finish of FINISH_ORDER) {
       const opt = document.createElement("option");
-      opt.value = rarity;
-      opt.textContent = rarity;
+      opt.value = finish;
+      opt.textContent = finish;
       els.rarityFilter.appendChild(opt);
     }
     for (const story of catalog.stories) {
@@ -312,19 +329,52 @@
     }
   }
 
+  function finishOf(card) {
+    const raw = (card?.rarity || "").trim();
+    if (FINISH_ORDER.includes(raw)) return raw;
+    if (raw === "Shared" || raw === "Exclusive" || !raw) return "Standard";
+    return raw;
+  }
+
+  function popNumber(card) {
+    const n = Number(card?.number);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  }
+
+  function sortByNumber(cards) {
+    return [...cards].sort((a, b) => {
+      const an = popNumber(a);
+      const bn = popNumber(b);
+      if (an == null && bn == null) return (a.name || "").localeCompare(b.name || "");
+      if (an == null) return 1;
+      if (bn == null) return -1;
+      if (an !== bn) return an - bn;
+      const fa = FINISH_ORDER.indexOf(finishOf(a));
+      const fb = FINISH_ORDER.indexOf(finishOf(b));
+      if (fa !== fb) return (fa < 0 ? 99 : fa) - (fb < 0 ? 99 : fb);
+      return (a.fullName || "").localeCompare(b.fullName || "");
+    });
+  }
+
   function makeCardTile(card, i = 0) {
     const wrap = document.createElement("div");
     wrap.className = "card-wrap";
     wrap.style.animationDelay = `${Math.min(i, 12) * 28}ms`;
 
+    const finish = finishOf(card);
+    const num = popNumber(card);
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "card";
     btn.dataset.id = String(card.id);
-    btn.setAttribute("aria-label", `${card.fullName}, ${card.rarity}`);
+    btn.setAttribute("aria-label", `${card.fullName}, ${finish}`);
     btn.innerHTML = `
-      <img src="${escapeAttr(card.thumb || card.full)}" alt="" loading="lazy" decoding="async" width="300" height="400" />
-      <span class="card-badge">${escapeHtml(card.rarity || "")}</span>
+      <img src="${escapeAttr(card.thumb || card.full)}" alt="" loading="lazy" decoding="async" width="160" height="200" />
+      <span class="card-caption">
+        <span class="card-num">${num != null ? `#${num}` : "—"}</span>
+        <span class="card-name">${escapeHtml(card.name || card.fullName || "")}</span>
+      </span>
+      <span class="card-badge">${escapeHtml(finish)}</span>
     `;
     wrap.appendChild(btn);
 
@@ -359,14 +409,16 @@
   function renderWishlist() {
     if (!els.wishGrid) return;
     const q = (els.wishSearch?.value || "").trim().toLowerCase();
-    const cards = [...wishlist]
-      .map(findCard)
-      .filter(Boolean)
-      .filter((c) => {
-        if (!q) return true;
-        const hay = `${c.fullName} ${c.name} ${c.version} ${c.story} ${c.color || ""}`.toLowerCase();
-        return hay.includes(q);
-      });
+    const cards = sortByNumber(
+      [...wishlist]
+        .map(findCard)
+        .filter(Boolean)
+        .filter((c) => {
+          if (!q) return true;
+          const hay = `${c.fullName} ${c.name} ${c.version} ${c.story} ${c.color || ""} ${finishOf(c)}`.toLowerCase();
+          return hay.includes(q);
+        })
+    );
 
     els.wishGrid.innerHTML = "";
     const frag = document.createDocumentFragment();
@@ -623,24 +675,26 @@
   function applyFilters() {
     const q = els.search.value.trim().toLowerCase();
     const setCode = els.setFilter.value;
-    const rarity = els.rarityFilter.value;
+    const finish = els.rarityFilter.value;
     const story = els.storyFilter.value;
 
-    filtered = catalog.cards.filter((c) => {
-      if (setCode && c.setCode !== setCode) return false;
-      if (rarity && c.rarity !== rarity) return false;
-      if (story && c.story !== story) return false;
-      if (q) {
-        const hay = `${c.fullName} ${c.name} ${c.version} ${c.story} ${c.color || ""}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    });
+    filtered = sortByNumber(
+      catalog.cards.filter((c) => {
+        if (setCode && c.setCode !== setCode) return false;
+        if (finish && finishOf(c) !== finish) return false;
+        if (story && c.story !== story) return false;
+        if (q) {
+          const hay = `${c.fullName} ${c.name} ${c.version} ${c.story} ${c.color || ""} ${finishOf(c)}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      })
+    );
 
-    shown = 0;
+    shown = filtered.length;
     els.grid.innerHTML = "";
     updateMeta();
-    renderMore();
+    renderCatalog();
   }
 
   function updateMeta() {
@@ -656,9 +710,9 @@
     if (els.search.value.trim()) parts.push(`“${els.search.value.trim()}”`);
 
     if (n === total && !parts.length) {
-      els.countLabel.textContent = `${total.toLocaleString()} Pops across the Pokémon line`;
+      els.countLabel.textContent = `${total.toLocaleString()} Pops in number order, split by finish`;
     } else {
-      els.countLabel.textContent = `${n.toLocaleString()} Pop${n === 1 ? "" : "s"} found`;
+      els.countLabel.textContent = `${n.toLocaleString()} Pop${n === 1 ? "" : "s"} found · sorted by #`;
     }
 
     els.activePills.hidden = parts.length === 0;
@@ -666,13 +720,50 @@
     els.empty.hidden = n !== 0;
   }
 
-  function renderMore() {
-    if (shown >= filtered.length) return;
-    const slice = filtered.slice(shown, shown + PAGE_SIZE);
+  function renderCatalog() {
+    if (!filtered.length) return;
+
+    const selectedFinish = els.rarityFilter.value;
+    const groups = new Map();
+    for (const finish of FINISH_ORDER) groups.set(finish, []);
+    const extras = new Map();
+
+    for (const card of filtered) {
+      const finish = finishOf(card);
+      if (groups.has(finish)) groups.get(finish).push(card);
+      else {
+        if (!extras.has(finish)) extras.set(finish, []);
+        extras.get(finish).push(card);
+      }
+    }
+
     const frag = document.createDocumentFragment();
-    slice.forEach((card, i) => frag.appendChild(makeCardTile(card, i)));
+    const renderGroup = (finish, cards) => {
+      if (!cards.length) return;
+      if (selectedFinish && finish !== selectedFinish) return;
+      const block = document.createElement("section");
+      block.className = "finish-block";
+      block.innerHTML = `
+        <div class="finish-head">
+          <h3 class="finish-label">${escapeHtml(finish)} <span class="finish-count">${cards.length}</span></h3>
+          <p class="finish-note">${escapeHtml(FINISH_BLURBS[finish] || "Special finish")}</p>
+        </div>
+      `;
+      const grid = document.createElement("div");
+      grid.className = "grid grid-compact";
+      cards.forEach((card, i) => grid.appendChild(makeCardTile(card, i)));
+      block.appendChild(grid);
+      frag.appendChild(block);
+    };
+
+    for (const finish of FINISH_ORDER) renderGroup(finish, groups.get(finish) || []);
+    for (const [finish, cards] of extras) renderGroup(finish, cards);
+
     els.grid.appendChild(frag);
-    shown += slice.length;
+  }
+
+  function renderMore() {
+    // Collection renders fully by finish section; sentinel kept for compatibility.
   }
 
   function openModal(card) {
@@ -682,7 +773,7 @@
     els.modalStory.textContent = card.story || "Pokémon";
     els.modalName.textContent = card.name || card.fullName;
     els.modalVersion.textContent = card.version ? card.version : card.fullName;
-    els.modalRarity.textContent = card.rarity || "—";
+    els.modalRarity.textContent = finishOf(card);
     els.modalSet.textContent = card.setName || card.setCode || "—";
     els.modalType.textContent = card.type || "—";
     els.modalColor.textContent = card.color || "—";
