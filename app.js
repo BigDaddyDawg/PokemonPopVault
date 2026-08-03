@@ -7,6 +7,7 @@
   /** Funko finish groups — Shared/Exclusive count as Standard. */
   const FINISH_ORDER = [
     "Standard",
+    "Jumbo",
     "Flocked",
     "Diamond",
     "Metallic",
@@ -14,7 +15,8 @@
     "Soft Color",
   ];
   const FINISH_BLURBS = {
-    Standard: "Regular Pop! releases (including common retailer exclusives)",
+    Standard: "Regular-size Pop! releases",
+    Jumbo: "10-inch / jumbo figures",
     Flocked: "Fuzzy flocked finishes",
     Diamond: "Diamond Collection sparkle",
     Metallic: "Metallic paint finishes",
@@ -451,6 +453,8 @@
   }
 
   function finishOf(card) {
+    const type = (card?.type || "").toLowerCase();
+    if (type.includes("jumbo")) return "Jumbo";
     const raw = (card?.rarity || "").trim();
     if (FINISH_ORDER.includes(raw)) return raw;
     if (raw === "Shared" || raw === "Exclusive" || !raw) return "Standard";
@@ -839,9 +843,9 @@
     const setCode = els.setFilter.value;
     const finish = els.rarityFilter.value;
     const story = els.storyFilter.value;
-
     const shelf = els.ownFilter?.value || "";
 
+    const seen = new Set();
     filtered = sortByNumber(
       catalog.cards.filter((c) => {
         if (setCode && c.setCode !== setCode) return false;
@@ -854,6 +858,19 @@
           const hay = `${c.fullName} ${c.name} ${c.version} ${c.story} ${c.color || ""} ${finishOf(c)}`.toLowerCase();
           if (!hay.includes(q)) return false;
         }
+        // Guard against catalogue twins in older snapshots.
+        const dedupeKey = [
+          c.number ?? "x",
+          (c.name || "").toLowerCase(),
+          finishOf(c),
+          (c.type || "").toLowerCase(),
+          (c.version || "")
+            .toLowerCase()
+            .replace(/\b(target|gamestop|amazon|hot topic|funko shop|pokemon center|only at|special edition|nycc|sdcc)\b/g, "")
+            .trim(),
+        ].join("|");
+        if (seen.has(dedupeKey)) return false;
+        seen.add(dedupeKey);
         return true;
       })
     );

@@ -409,7 +409,6 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
         )
 
     # Add Funko shop items not already present (new releases / soft colors / jumbos)
-    existing_names = {(slugify(c["name"]), slugify(c["version"]), c["rarity"]) for c in cards}
     for fr in funko_rows:
         raw = fr["name"]
         raw = re.sub(r"^Pop!\s*", "", raw, flags=re.I).strip()
@@ -427,14 +426,21 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
                 continue
         pop_type = classify_type(version, fr["name"])
         rarity = classify_rarity(version, "")
-        key_t = (slugify(name), slugify(version), rarity)
-        # skip if we already have same character+version from PC
-        if any(
-            slugify(c["name"]) == slugify(name)
-            and slugify(c["version"]) == slugify(version)
-            for c in cards
-        ):
-            continue
+        # Skip shop listings that only restate a Pokémon already in the catalog.
+        # Plain "Pop! Squirtle" duplicates Squirtle #504; keep only true new finishes.
+        name_s = slugify(name)
+        ver_s = slugify(version)
+        already = [c for c in cards if slugify(c["name"]) == name_s]
+        if already:
+            if not ver_s:
+                continue
+            if any(
+                ver_s in slugify(c.get("version") or "")
+                or ver_s in slugify(c.get("rarity") or "")
+                or slugify(c.get("rarity") or "") == slugify(rarity)
+                for c in already
+            ):
+                continue
         sc = set_code_for(pop_type)
         cid = abs(hash(fr["pid"])) % (10**9)
         cards.append(
@@ -456,7 +462,8 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
                 "url": fr.get("url"),
             }
         )
-        existing_names.add(key_t)
+
+    cards = dedupe_cards(cards)
 
     def sort_key(c: dict):
         n = c.get("number")
@@ -464,6 +471,54 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
 
     cards.sort(key=sort_key)
     return cards
+
+
+def _is_plain_standard(card: dict) -> bool:
+    rarity = (card.get("rarity") or "").lower()
+    version = (card.get("version") or "").lower()
+    if rarity not in {"shared", "exclusive", ""}:
+        return False
+    specialty = ("flocked", "diamond", "metallic", "pearlescent", "soft color", "soft-color")
+    return not any(tok in version for tok in specialty)
+
+
+def dedupe_cards(cards: list[dict]) -> list[dict]:
+    """Drop common catalogue twins (shop restates + bare entries under jumbo numbers)."""
+    jumbo_nums = {
+        c.get("number")
+        for c in cards
+        if c.get("number") and "jumbo" in (c.get("type") or "").lower()
+    }
+    out: list[dict] = []
+    seen: set[tuple] = set()
+    for c in cards:
+        number = c.get("number")
+        # PriceCharting sometimes lists a bare Pop under the jumbo number as well.
+        if number in jumbo_nums and (c.get("type") or "") == "Pop!" and _is_plain_standard(c):
+            continue
+
+        finish = c.get("rarity") or "Shared"
+        finish_key = "Standard" if finish in {"Shared", "Exclusive"} else finish
+        version = c.get("version") or ""
+        version_key = re.sub(
+            r"\b(target|gamestop|amazon|hot topic|funko shop|pokemon center|"
+            r"only at|special edition|nycc|sdcc|summer convention)\b",
+            "",
+            version,
+            flags=re.I,
+        )
+        identity = (
+            number,
+            slugify(c.get("name") or ""),
+            slugify(c.get("type") or ""),
+            slugify(finish_key),
+            slugify(version_key),
+        )
+        if identity in seen:
+            continue
+        seen.add(identity)
+        out.append(c)
+    return out
 
 
 def main() -> None:
