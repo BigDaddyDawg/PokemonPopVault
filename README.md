@@ -44,8 +44,8 @@ python scripts/refresh_data.py
 ## Coming Soon tab
 
 Sources of truth:
-- **Upcoming waves & shop sightings:** Funko.com Pokémon listings
-- **News:** Official [Funko blog](https://funko.com/blog/)
+- **Upcoming waves & shop sightings:** [Funko UK](https://funko.com/gb/search?q=pokemon) Pokémon listings
+- **News:** Official [Funko UK blog](https://funko.com/gb/funko-blog/)
 
 Refresh behavior:
 - When you open **Coming Soon**, the app reloads `data/coming-soon.json` and tries a **live** pull of blog headlines

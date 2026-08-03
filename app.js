@@ -2,8 +2,9 @@
   const PAGE_SIZE = 48;
   const WISHLIST_KEY = "pokepopvault_wishlist_v1";
   const OWNED_KEY = "pokepopvault_owned_v1";
-  const NEWS_URL = "https://funko.com/blog/";
-  const LIVE_NEWS_URL = "https://r.jina.ai/http://funko.com/blog/";
+  const NEWS_URL = "https://funko.com/gb/funko-blog/";
+  const LIVE_NEWS_URL = "https://r.jina.ai/https://funko.com/gb/funko-blog/";
+  const SHOP_URL = "https://funko.com/gb/search?q=pokemon";
   /** Funko finish groups — Shared/Exclusive count as Standard. */
   const FINISH_ORDER = [
     "Standard",
@@ -760,7 +761,7 @@
         ]
           .filter(Boolean)
           .join(" · ");
-        const href = set.productUrl || NEWS_URL;
+        const href = set.productUrl || SHOP_URL;
         const count =
           set.revealedCount > 0
             ? `${set.revealedCount} Pop${set.revealedCount === 1 ? "" : "s"} spotted so far`

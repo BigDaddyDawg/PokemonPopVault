@@ -16,12 +16,14 @@ UA = {
         "fan gallery refresh)"
     )
 }
-FUNKO_NEWS = "https://funko.com/blog/"
+FUNKO_NEWS = "https://funko.com/gb/funko-blog/"
+FUNKO_SHOP = "https://funko.com/gb/search?q=pokemon"
+FUNKO_SHOP_POP = "https://funko.com/gb/search?q=pokemon+pop"
 FUNKO_SEARCH = (
-    "https://funko.com/on/demandware.store/Sites-FunkoUS-Site/default/"
+    "https://funko.com/on/demandware.store/Sites-FunkoEU-Site/en_GB/"
     "Search-UpdateGrid?q=pokemon&start=0&sz=48"
 )
-JINA_NEWS = "https://r.jina.ai/http://funko.com/blog/"
+JINA_NEWS = "https://r.jina.ai/https://funko.com/gb/funko-blog/"
 
 # Announced / pre-order waves we track manually when shop copy is thin
 UPCOMING_WAVES = [
@@ -35,7 +37,7 @@ UPCOMING_WAVES = [
             "Jumbo Suicune, Entei, and Raikou have been hitting conventions and "
             "retailer exclusives — watch for wider restocks."
         ),
-        "productUrl": "https://funko.com/search?q=pokemon",
+        "productUrl": FUNKO_SHOP,
     },
     {
         "code": "PALDEA-KALOS",
@@ -47,9 +49,27 @@ UPCOMING_WAVES = [
             "Newer species like Ceruledge, Fidough, Fuecoco, and Quaxly continue "
             "to expand the Pop! Pokémon shelf."
         ),
-        "productUrl": "https://funko.com/search?q=pokemon+pop",
+        "productUrl": FUNKO_SHOP_POP,
     },
 ]
+
+
+def uk_url(path_or_url: str | None) -> str:
+    """Force Funko links onto the GB storefront."""
+    if not path_or_url:
+        return FUNKO_SHOP
+    raw = path_or_url.strip()
+    if raw.startswith("http"):
+        if "funko.com/gb/" in raw or "funko.com/gb?" in raw:
+            return raw
+        return raw.replace("https://funko.com/", "https://funko.com/gb/", 1).replace(
+            "http://funko.com/", "https://funko.com/gb/", 1
+        )
+    if raw.startswith("/gb/") or raw.startswith("/gb?"):
+        return "https://funko.com" + raw
+    if raw.startswith("/"):
+        return "https://funko.com/gb" + raw
+    return FUNKO_SHOP
 
 
 def fetch(url: str, browser: bool = False) -> str:
@@ -117,7 +137,11 @@ def parse_funko_preorders(html: str) -> list[dict]:
         is_soon = bool(
             re.search(r"pre-?order|coming soon|notify|backorder", blob, re.I)
         )
-        href = re.search(r'href="(/[^"]+\.html)"', block)
+        href = re.search(
+            r'href="((?:https://funko\.com)?/[^"]+\.html)"',
+            block,
+            re.I,
+        )
         raw = re.sub(r"^Pop!\s*", "", name, flags=re.I).strip()
         version = ""
         pname = raw
@@ -139,7 +163,7 @@ def parse_funko_preorders(html: str) -> list[dict]:
                 "thumb": thumb,
                 "full": full,
                 "isExternalReveal": is_soon,
-                "url": ("https://funko.com" + href.group(1)) if href else None,
+                "url": uk_url(href.group(1) if href else None),
             }
         )
     return reveals
@@ -283,7 +307,7 @@ def main() -> None:
         "sources": {
             "catalog": "PriceCharting + curated Pop! Pokémon checklist",
             "news": FUNKO_NEWS,
-            "shop": "https://funko.com/search?q=pokemon",
+            "shop": FUNKO_SHOP,
         },
         "upcomingSets": upcoming,
         "reveals": soon,
