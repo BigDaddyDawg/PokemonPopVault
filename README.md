@@ -4,7 +4,16 @@ A static gallery of every Pokémon Funko Pop! ever released — browse by series
 
 ## Live site
 
-After Pages is enabled: `https://bigdaddydawg.github.io/PokemonPopVault/`
+`https://bigdaddydawg.github.io/PokemonPopVault/`
+
+## Install on your phone (PWA)
+
+Same pattern as Toploader — open the live site in your phone browser, then:
+
+- **iPhone (Safari):** Share → **Add to Home Screen**
+- **Android (Chrome):** menu → **Install app** / **Add to Home screen**
+
+It opens fullscreen like a native app (standalone display + offline shell via service worker).
 
 ## Local
 
