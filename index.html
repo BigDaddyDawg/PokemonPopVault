@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Russo+One&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=11" />
   <script>
     try {
       if (
@@ -83,10 +83,20 @@
           <span class="stat-label">Owned</span>
         </div>
         <div class="stat">
+          <span class="stat-value" id="statValue">£0</span>
+          <span class="stat-label">Shelf value</span>
+        </div>
+        <div class="stat">
           <span class="stat-value" id="statWish">0</span>
           <span class="stat-label">Wishlist</span>
         </div>
       </div>
+    </div>
+    <div class="caught-progress" aria-label="Collection progress">
+      <div class="caught-progress-track">
+        <div class="caught-progress-fill" id="caughtProgressFill"></div>
+      </div>
+      <p class="caught-progress-label" id="caughtProgressLabel">0% caught</p>
     </div>
   </header>
 
@@ -239,6 +249,9 @@
     <p class="fine">Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Pokémon and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Game Freak, or Funko.</p>
   </footer>
 
+  <div class="toast" id="caughtToast" hidden role="status" aria-live="polite"></div>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
   <dialog class="modal" id="cardModal">
     <div class="modal-shell">
       <button type="button" class="modal-close" id="modalClose" aria-label="Close">×</button>
@@ -282,7 +295,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="family-vault-config.js"></script>
   <script src="family-list-sync.js?v=shared3"></script>
-  <script src="app.js?v=ui10" defer></script>
+  <script src="app.js?v=ui11" defer></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

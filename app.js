@@ -86,6 +86,11 @@
     statTotal: document.getElementById("statTotal"),
     statOwned: document.getElementById("statOwned"),
     statWish: document.getElementById("statWish"),
+    statValue: document.getElementById("statValue"),
+    caughtProgressFill: document.getElementById("caughtProgressFill"),
+    caughtProgressLabel: document.getElementById("caughtProgressLabel"),
+    caughtToast: document.getElementById("caughtToast"),
+    confetti: document.getElementById("confetti"),
   };
 
   /** @type {{cards: any[], sets: any[], rarities: string[], stories: string[], count?: number}} */
@@ -160,11 +165,65 @@
       window.setTimeout(() => {
         root.hidden = true;
         document.documentElement.classList.add("skip-intro");
+        burstConfetti();
       }, 600);
     };
 
     els.introSkip?.addEventListener("click", finish, { once: true });
     window.setTimeout(finish, 4200);
+  }
+
+  function burstConfetti() {
+    const layer = els.confetti;
+    if (!layer) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    layer.innerHTML = "";
+    layer.classList.add("is-on");
+    const colors = ["#ee1515", "#ffffff", "#ffcb05", "#222224", "#ff6b6b"];
+    const count = 48;
+    for (let i = 0; i < count; i++) {
+      const bit = document.createElement("span");
+      bit.className = "confetti-bit";
+      const left = Math.random() * 100;
+      const delay = Math.random() * 0.25;
+      const duration = 1.1 + Math.random() * 0.9;
+      const size = 6 + Math.random() * 8;
+      bit.style.left = `${left}%`;
+      bit.style.background = colors[i % colors.length];
+      bit.style.width = `${size}px`;
+      bit.style.height = `${size * (0.6 + Math.random() * 0.8)}px`;
+      bit.style.animationDelay = `${delay}s`;
+      bit.style.animationDuration = `${duration}s`;
+      bit.style.setProperty("--drift", `${(Math.random() - 0.5) * 140}px`);
+      bit.style.setProperty("--spin", `${Math.random() > 0.5 ? 1 : -1}turn`);
+      layer.appendChild(bit);
+    }
+    window.setTimeout(() => {
+      layer.classList.remove("is-on");
+      layer.innerHTML = "";
+    }, 2200);
+  }
+
+  function showCaughtToast(card) {
+    const toast = els.caughtToast;
+    if (!toast || !card) return;
+    const name = card.name || card.fullName || "Pop";
+    const price = priceOf(card);
+    toast.innerHTML = `<strong>Caught!</strong> <span>${escapeHtml(name)}</span>${
+      price ? ` <em>${escapeHtml(price)}</em>` : ""
+    }`;
+    toast.hidden = false;
+    toast.classList.remove("is-show");
+    void toast.offsetWidth;
+    toast.classList.add("is-show");
+    window.clearTimeout(showCaughtToast._timer);
+    showCaughtToast._timer = window.setTimeout(() => {
+      toast.classList.remove("is-show");
+      window.setTimeout(() => {
+        toast.hidden = true;
+      }, 280);
+    }, 2200);
   }
 
   async function initFamilyVault() {
@@ -257,9 +316,11 @@
 
   function toggleOwn(id) {
     const key = String(id);
+    let justCaught = false;
     if (owned.has(key)) owned.delete(key);
     else {
       owned.add(key);
+      justCaught = true;
       if (wishlist.has(key)) {
         wishlist.delete(key);
         saveWishlist();
@@ -278,6 +339,7 @@
       syncModalOwnBtn();
       syncModalWishBtn();
     }
+    if (justCaught) showCaughtToast(findCard(key));
     return owned.has(key);
   }
 
@@ -520,6 +582,40 @@
     if (els.statTotal) els.statTotal.textContent = total ? total.toLocaleString() : "—";
     if (els.statOwned) els.statOwned.textContent = ownedN.toLocaleString();
     if (els.statWish) els.statWish.textContent = wishN.toLocaleString();
+
+    let shelfGbp = 0;
+    let priced = 0;
+    for (const id of owned) {
+      const card = findCard(id);
+      const n = Number(card?.priceGbp);
+      if (Number.isFinite(n)) {
+        shelfGbp += n;
+        priced += 1;
+      } else if (card?.priceUsd != null && Number.isFinite(Number(card.priceUsd))) {
+        shelfGbp += Number(card.priceUsd) * 0.79;
+        priced += 1;
+      }
+    }
+    if (els.statValue) {
+      els.statValue.textContent =
+        priced > 0
+          ? new Intl.NumberFormat("en-GB", {
+              style: "currency",
+              currency: "GBP",
+              maximumFractionDigits: shelfGbp >= 100 ? 0 : 2,
+            }).format(shelfGbp)
+          : "£0";
+    }
+
+    const pct = total ? Math.round((ownedN / total) * 100) : 0;
+    if (els.caughtProgressFill) els.caughtProgressFill.style.width = `${pct}%`;
+    if (els.caughtProgressLabel) {
+      els.caughtProgressLabel.textContent =
+        total > 0
+          ? `${pct}% caught · ${ownedN.toLocaleString()} / ${total.toLocaleString()}`
+          : "Loading catch progress…";
+    }
+
     if (els.wishCountLabel) {
       els.wishCountLabel.textContent =
         wishN === 0
@@ -530,9 +626,7 @@
       els.ownedCountLabel.textContent =
         ownedN === 0
           ? "Shared family shelf — anyone can tick these off."
-          : `${ownedN.toLocaleString()} owned${total ? ` of ${total.toLocaleString()}` : ""} · ${
-              total ? Math.round((ownedN / total) * 100) : 0
-            }% of the catalogue.`;
+          : `${ownedN.toLocaleString()} owned${total ? ` of ${total.toLocaleString()}` : ""} · ${pct}% of the catalogue.`;
     }
   }
 
