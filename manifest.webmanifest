@@ -1,17 +1,27 @@
 {
-  "name": "Poké Pop Vault",
+  "id": "./",
+  "name": "Pop Vault",
   "short_name": "Pop Vault",
-  "description": "Gallery of every Pokémon Funko Pop! ever released — browse, filter, and scout Coming Soon.",
+  "description": "Pokémon and Dragon Ball Funko Pop! gallery — browse, track owned Pops, wishlist, and Coming Soon.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#ee1515",
+  "lang": "en",
+  "categories": ["entertainment", "lifestyle"],
   "icons": [
     {
       "src": "icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
       "purpose": "any"
     },
     {
@@ -24,7 +34,13 @@
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

@@ -8,12 +8,14 @@ A static gallery of every Pokémon Funko Pop! ever released — browse by series
 
 ## Install on your phone (PWA)
 
-Same pattern as Toploader — open the live site in your phone browser, then:
+Open the live site, then:
 
-- **iPhone (Safari):** Share → **Add to Home Screen**
-- **Android (Chrome):** menu → **Install app** / **Add to Home screen**
+- **iPhone (Safari):** use the in-app **Install on iPhone** banner, or Share → **Add to Home Screen**
+- **Android (Chrome):** tap **Install** when prompted, or browser menu → **Install app**
 
 It opens fullscreen like a native app (standalone display + offline shell via service worker).
+
+> iPhone never shows Android’s install button — Safari’s Share sheet is the only path. Open the site in **Safari**, not Chrome or Instagram’s browser.
 
 ## Owned & wishlist
 

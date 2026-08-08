@@ -199,6 +199,18 @@
     universeDragonball: document.getElementById("universeDragonball"),
     universeTransition: document.getElementById("universeTransition"),
     themeColorMeta: document.querySelector('meta[name="theme-color"]'),
+    installBanner: document.getElementById("installBanner"),
+    installBannerTitle: document.getElementById("installBannerTitle"),
+    installBannerText: document.getElementById("installBannerText"),
+    installBannerGo: document.getElementById("installBannerGo"),
+    installBannerDismiss: document.getElementById("installBannerDismiss"),
+    installFooter: document.getElementById("installFooter"),
+    installFooterBtn: document.getElementById("installFooterBtn"),
+    installHelp: document.getElementById("installHelp"),
+    installHelpClose: document.getElementById("installHelpClose"),
+    installHelpDone: document.getElementById("installHelpDone"),
+    installHelpLead: document.getElementById("installHelpLead"),
+    installHelpSteps: document.getElementById("installHelpSteps"),
   };
 
   /** @type {{cards: any[], sets: any[], rarities: string[], stories: string[], count?: number}} */
@@ -232,6 +244,7 @@
   loadWishlist();
   loadOwned();
   boot();
+  initInstallPrompt();
 
   async function boot() {
     try {
@@ -252,6 +265,185 @@
       els.countLabel.textContent = "The vault wouldn’t open. Try refreshing.";
       console.error(err);
     }
+  }
+
+  const INSTALL_DISMISS_KEY = "ppv_install_dismissed_v1";
+  /** @type {any} */
+  let deferredInstallPrompt = null;
+
+  function isStandaloneDisplay() {
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.matchMedia("(display-mode: fullscreen)").matches ||
+      // iOS Safari legacy
+      Boolean(window.navigator.standalone)
+    );
+  }
+
+  function isIosDevice() {
+    const ua = navigator.userAgent || "";
+    if (/iPad|iPhone|iPod/.test(ua)) return true;
+    // iPadOS desktop UA
+    return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+  }
+
+  function isInstallDismissed() {
+    try {
+      return localStorage.getItem(INSTALL_DISMISS_KEY) === "1";
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function markInstallDismissed() {
+    try {
+      localStorage.setItem(INSTALL_DISMISS_KEY, "1");
+    } catch (_) {}
+  }
+
+  function hideInstallBanner() {
+    if (els.installBanner) els.installBanner.hidden = true;
+  }
+
+  function isMobileBrowse() {
+    return (
+      isIosDevice() ||
+      /Android/i.test(navigator.userAgent || "") ||
+      window.matchMedia("(max-width: 900px)").matches
+    );
+  }
+
+  function showInstallFooter() {
+    if (els.installFooter && !isStandaloneDisplay() && isMobileBrowse()) {
+      els.installFooter.hidden = false;
+    }
+  }
+
+  function revealInstallBanner() {
+    if (!els.installBanner || isStandaloneDisplay() || isInstallDismissed()) return;
+    if (!isMobileBrowse()) return;
+    const ios = isIosDevice();
+    if (!ios && !deferredInstallPrompt) return;
+    if (els.installBannerTitle) {
+      els.installBannerTitle.textContent = ios ? "Install on iPhone" : "Install Pop Vault";
+    }
+    if (els.installBannerText) {
+      els.installBannerText.textContent = ios
+        ? "Safari → Share → Add to Home Screen for the full app."
+        : "Add the app icon for faster access and full-screen browsing.";
+    }
+    if (els.installBannerGo) {
+      els.installBannerGo.textContent = ios || !deferredInstallPrompt ? "How to" : "Install";
+    }
+    els.installBanner.hidden = false;
+  }
+
+  function openInstallHelp() {
+    const ios = isIosDevice();
+    if (els.installHelpLead) {
+      els.installHelpLead.textContent = ios
+        ? "iPhone doesn’t show an Install button like Android — use Safari’s Share menu instead."
+        : "Install Pop Vault for a full-screen app icon on your Home Screen.";
+    }
+    if (els.installHelpSteps) {
+      if (ios) {
+        els.installHelpSteps.innerHTML = `
+          <li>Open this site in <strong>Safari</strong> (not Chrome or an in-app browser).</li>
+          <li>Tap the <strong>Share</strong> button
+            <span class="install-share-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3l4 4h-3v6h-2V7H8l4-4zm-7 8h2v8h10v-8h2v10H5V11z"/></svg>
+            </span>
+            at the bottom of Safari.
+          </li>
+          <li>Scroll and tap <strong>Add to Home Screen</strong>, then <strong>Add</strong>.</li>
+        `;
+      } else {
+        els.installHelpSteps.innerHTML = `
+          <li>Tap <strong>Install</strong> if your browser offers it.</li>
+          <li>Or open the browser menu (⋮) and choose <strong>Install app</strong> / <strong>Add to Home screen</strong>.</li>
+          <li>Open Pop Vault from your home screen for the full app view.</li>
+        `;
+      }
+    }
+    if (els.installHelp && typeof els.installHelp.showModal === "function") {
+      els.installHelp.showModal();
+    }
+  }
+
+  function closeInstallHelp() {
+    if (els.installHelp?.open) els.installHelp.close();
+  }
+
+  async function runInstallAction() {
+    if (deferredInstallPrompt) {
+      try {
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        if (choice?.outcome === "accepted") {
+          hideInstallBanner();
+          if (els.installFooter) els.installFooter.hidden = true;
+          markInstallDismissed();
+        }
+      } catch (err) {
+        console.warn("Install prompt failed", err);
+        openInstallHelp();
+      }
+      return;
+    }
+    openInstallHelp();
+  }
+
+  function initInstallPrompt() {
+    if (isStandaloneDisplay()) {
+      hideInstallBanner();
+      if (els.installFooter) els.installFooter.hidden = true;
+      return;
+    }
+
+    showInstallFooter();
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      if (!isInstallDismissed()) revealInstallBanner();
+      if (els.installBannerGo) els.installBannerGo.textContent = "Install";
+      if (els.installBannerText) {
+        els.installBannerText.textContent =
+          "Add the app icon for faster access and full-screen browsing.";
+      }
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      hideInstallBanner();
+      if (els.installFooter) els.installFooter.hidden = true;
+      markInstallDismissed();
+    });
+
+    els.installBannerGo?.addEventListener("click", () => {
+      runInstallAction();
+    });
+    els.installBannerDismiss?.addEventListener("click", () => {
+      markInstallDismissed();
+      hideInstallBanner();
+      showInstallFooter();
+    });
+    els.installFooterBtn?.addEventListener("click", () => {
+      runInstallAction();
+    });
+    els.installHelpClose?.addEventListener("click", closeInstallHelp);
+    els.installHelpDone?.addEventListener("click", closeInstallHelp);
+    els.installHelp?.addEventListener("click", (e) => {
+      if (e.target === els.installHelp) closeInstallHelp();
+    });
+
+    // iOS never fires beforeinstallprompt — show the guided banner after the intro.
+    const delay = document.documentElement.classList.contains("skip-intro") ? 1200 : 4800;
+    window.setTimeout(() => {
+      if (isIosDevice()) revealInstallBanner();
+      else if (deferredInstallPrompt) revealInstallBanner();
+    }, delay);
   }
 
   function applyUniverseChrome(updateIntroCopy) {

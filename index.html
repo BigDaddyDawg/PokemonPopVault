@@ -7,16 +7,18 @@
   <meta name="theme-color" content="#ee1515" id="themeColorMeta" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Pop Vault" />
+  <meta name="format-detection" content="telephone=no" />
   <title>Pop Vault · Pokémon &amp; Dragon Ball Funko Gallery</title>
-  <link rel="manifest" href="manifest.webmanifest?v=8" />
-  <link rel="icon" href="icon.svg?v=7" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=7" />
+  <link rel="manifest" href="manifest.webmanifest?v=10" />
+  <link rel="icon" href="icon.svg?v=10" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180" />
+  <link rel="apple-touch-icon" href="icon-192.png" sizes="192x192" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Russo+One&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=14" />
+  <link rel="stylesheet" href="styles.css?v=15" />
   <script>
     try {
       const saved = localStorage.getItem("ppv_universe_v1");
@@ -239,7 +241,41 @@
   <footer class="site-footer">
     <p id="footerMain">Pop Vault · fan gallery · data via PriceCharting, Funko.com &amp; community checklists</p>
     <p class="fine" id="footerFine">Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Character names and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Toei Animation, Bird Studio / Shueisha, or Funko.</p>
+    <p class="install-footer" id="installFooter" hidden>
+      <button type="button" class="install-footer-btn" id="installFooterBtn">Install Pop Vault on this phone</button>
+    </p>
   </footer>
+
+  <div class="install-banner" id="installBanner" hidden>
+    <div class="install-banner-copy">
+      <strong id="installBannerTitle">Get the app</strong>
+      <p id="installBannerText">Add Pop Vault to your Home Screen for the full-screen app experience.</p>
+    </div>
+    <div class="install-banner-actions">
+      <button type="button" class="install-banner-go" id="installBannerGo">Install</button>
+      <button type="button" class="install-banner-dismiss" id="installBannerDismiss" aria-label="Dismiss">Not now</button>
+    </div>
+  </div>
+
+  <dialog class="install-help" id="installHelp" aria-labelledby="installHelpTitle">
+    <div class="install-help-shell">
+      <button type="button" class="modal-close" id="installHelpClose" aria-label="Close">×</button>
+      <h2 id="installHelpTitle">Add to Home Screen</h2>
+      <p class="install-help-lead" id="installHelpLead">iPhone doesn’t show an Install button like Android — use Safari’s Share menu instead.</p>
+      <ol class="install-help-steps" id="installHelpSteps">
+        <li>Open this site in <strong>Safari</strong> (not Chrome or Instagram’s browser).</li>
+        <li>Tap the <strong>Share</strong> button
+          <span class="install-share-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3l4 4h-3v6h-2V7H8l4-4zm-7 8h2v8h10v-8h2v10H5V11z"/></svg>
+          </span>
+          at the bottom of Safari.
+        </li>
+        <li>Scroll and tap <strong>Add to Home Screen</strong>, then <strong>Add</strong>.</li>
+      </ol>
+      <p class="install-help-note">Afterwards it opens full screen like an app, with your owned list and wishlist synced.</p>
+      <button type="button" class="install-help-done" id="installHelpDone">Got it</button>
+    </div>
+  </dialog>
 
   <div class="toast" id="caughtToast" hidden role="status" aria-live="polite"></div>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
@@ -310,12 +346,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="family-vault-config.js"></script>
   <script src="family-list-sync.js?v=shared3"></script>
-  <script src="app.js?v=ui15" defer></script>
+  <script src="app.js?v=ui16" defer></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("service-worker.js?v=9")
+          .register("service-worker.js?v=10")
           .then((reg) => {
             if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
             reg.update().catch(() => {});
