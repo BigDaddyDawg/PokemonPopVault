@@ -29,8 +29,8 @@
       tagline: "Every Pokémon Funko Pop! — your shelf, your story.",
       introLine: "POKÉMON",
       introTag: "Open the collection.",
-      catalogUrl: "./data/cards.json?v=15",
-      comingUrl: "./data/coming-soon.json?v=15",
+      catalogUrl: "./data/cards.json?v=16",
+      comingUrl: "./data/coming-soon.json?v=16",
       wishlistKey: "pokepopvault_wishlist_v1",
       ownedKey: "pokepopvault_owned_v1",
       appSlug: "pokepopvault",
@@ -66,8 +66,8 @@
       tagline: "Every Dragon Ball Funko Pop! — power up your shelf.",
       introLine: "DRAGON BALL",
       introTag: "Summon the collection.",
-      catalogUrl: "./data/dbz-cards.json?v=15",
-      comingUrl: "./data/dbz-coming-soon.json?v=15",
+      catalogUrl: "./data/dbz-cards.json?v=16",
+      comingUrl: "./data/dbz-coming-soon.json?v=16",
       wishlistKey: "dbzpopvault_wishlist_v1",
       ownedKey: "dbzpopvault_owned_v1",
       appSlug: "dbzpopvault",
@@ -154,6 +154,7 @@
     panelComing: document.getElementById("panelComing"),
     tabCollection: document.getElementById("tabCollection"),
     tabOwned: document.getElementById("tabOwned"),
+    tabForYou: document.getElementById("tabForYou"),
     tabWishlist: document.getElementById("tabWishlist"),
     tabComing: document.getElementById("tabComing"),
     ownedGrid: document.getElementById("ownedGrid"),
@@ -161,6 +162,11 @@
     ownedSearch: document.getElementById("ownedSearch"),
     ownedCountLabel: document.getElementById("ownedCountLabel"),
     ownedTabCount: document.getElementById("ownedTabCount"),
+    panelForYou: document.getElementById("panelForYou"),
+    forYouStatus: document.getElementById("forYouStatus"),
+    forYouTaste: document.getElementById("forYouTaste"),
+    forYouShelves: document.getElementById("forYouShelves"),
+    forYouEmpty: document.getElementById("forYouEmpty"),
     wishGrid: document.getElementById("wishGrid"),
     wishEmpty: document.getElementById("wishEmpty"),
     wishSearch: document.getElementById("wishSearch"),
@@ -654,6 +660,7 @@
         updateTrackerChrome();
         applyFilters();
         if (activeTab === "owned") renderOwned();
+        if (activeTab === "foryou") renderForYou();
         if (modalCardId) syncModalOwnBtn();
       },
     });
@@ -739,6 +746,7 @@
     updateTrackerChrome();
     if (activeTab === "owned") renderOwned();
     if (activeTab === "wishlist") renderWishlist();
+    if (activeTab === "foryou") renderForYou();
     if (activeTab === "collection") applyFilters();
     if (modalCardId === key) {
       syncModalOwnBtn();
@@ -857,6 +865,7 @@
 
     els.grid.addEventListener("click", onGridClick);
     els.ownedGrid?.addEventListener("click", onGridClick);
+    els.forYouShelves?.addEventListener("click", onGridClick);
     els.wishGrid?.addEventListener("click", onGridClick);
     els.revealsGrid?.addEventListener("click", onGridClick);
 
@@ -884,6 +893,7 @@
 
     els.tabCollection?.addEventListener("click", () => showTab("collection"));
     els.tabOwned?.addEventListener("click", () => showTab("owned"));
+    els.tabForYou?.addEventListener("click", () => showTab("foryou"));
     els.tabWishlist?.addEventListener("click", () => showTab("wishlist"));
     els.tabComing?.addEventListener("click", () => showTab("coming"));
     els.wishSearch?.addEventListener("input", () => {
@@ -925,6 +935,7 @@
   function maybeOpenTabFromHash() {
     const hash = (location.hash || "").toLowerCase();
     if (hash.includes("wishlist")) showTab("wishlist");
+    else if (hash.includes("foryou") || hash.includes("for-you")) showTab("foryou");
     else if (hash.includes("owned")) showTab("owned");
     else if (hash.includes("coming")) showTab("coming");
     else if (hash.includes("collection")) showTab("collection");
@@ -934,16 +945,19 @@
     activeTab = name;
     const collection = name === "collection";
     const ownedTab = name === "owned";
+    const forYouTab = name === "foryou";
     const wishlistTab = name === "wishlist";
     const coming = name === "coming";
 
     els.panelCollection.hidden = !collection;
     if (els.panelOwned) els.panelOwned.hidden = !ownedTab;
+    if (els.panelForYou) els.panelForYou.hidden = !forYouTab;
     if (els.panelWishlist) els.panelWishlist.hidden = !wishlistTab;
     els.panelComing.hidden = !coming;
 
     els.tabCollection.classList.toggle("is-active", collection);
     els.tabOwned?.classList.toggle("is-active", ownedTab);
+    els.tabForYou?.classList.toggle("is-active", forYouTab);
     els.tabWishlist?.classList.toggle("is-active", wishlistTab);
     els.tabComing.classList.toggle("is-active", coming);
 
@@ -953,6 +967,9 @@
     } else if (ownedTab) {
       history.replaceState(null, "", "#owned");
       renderOwned();
+    } else if (forYouTab) {
+      history.replaceState(null, "", "#foryou");
+      renderForYou();
     } else if (wishlistTab) {
       history.replaceState(null, "", "#wishlist");
       renderWishlist();
@@ -1239,6 +1256,258 @@
           : "No owned Pops match that search.";
       els.ownedEmpty.hidden = cards.length !== 0;
     }
+  }
+
+  function topCounts(map, limit = 3, min = 1) {
+    return [...map.entries()]
+      .filter(([, n]) => n >= min)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, limit);
+  }
+
+  function bumpCount(map, key, by = 1) {
+    if (!key) return;
+    map.set(key, (map.get(key) || 0) + by);
+  }
+
+  function isBoutiqueExclusive(card) {
+    const color = (card.color || "").trim();
+    if (!color) return false;
+    return !/^common retail$/i.test(color);
+  }
+
+  function isSpecialFinish(card) {
+    const hay = `${card.rarity || ""} ${card.version || ""} ${card.type || ""}`.toLowerCase();
+    return /flock|pearl|metallic|glitter|chrome|diamond|soft color|gitd|glow|blacklight|holographic|jumbo|10 inch|super sized|chase|le\b/.test(
+      hay
+    );
+  }
+
+  function buildTasteProfile(ownedCards) {
+    const names = new Map();
+    const stories = new Map();
+    const finishes = new Map();
+    const types = new Map();
+    const exclusives = new Map();
+    let specialScore = 0;
+
+    for (const card of ownedCards) {
+      bumpCount(names, card.name || card.story);
+      bumpCount(stories, card.story);
+      bumpCount(finishes, finishOf(card));
+      bumpCount(types, card.type);
+      if (isBoutiqueExclusive(card)) bumpCount(exclusives, card.color);
+      if (isSpecialFinish(card)) specialScore += 1;
+    }
+
+    return {
+      ownedCount: ownedCards.length,
+      names: topCounts(names, 4),
+      stories: topCounts(stories, 3),
+      finishes: topCounts(finishes, 3),
+      types: topCounts(types, 2),
+      exclusives: topCounts(exclusives, 2),
+      specialScore,
+      lovesSpecials: specialScore >= Math.max(2, Math.ceil(ownedCards.length * 0.35)),
+    };
+  }
+
+  function scoreRecommendation(card, taste) {
+    let score = 0;
+    /** @type {string[]} */
+    const reasons = [];
+
+    for (const [name, n] of taste.names) {
+      if ((card.name || card.story) === name) {
+        score += 14 + n * 3;
+        reasons.push(`More ${name} for the shelf`);
+        break;
+      }
+    }
+    for (const [story, n] of taste.stories) {
+      if (card.story === story) {
+        score += 8 + n * 2;
+        if (reasons.length < 2) reasons.push(`${story} energy`);
+        break;
+      }
+    }
+    const finish = finishOf(card);
+    for (const [f, n] of taste.finishes) {
+      if (finish === f && f && !/^shared$/i.test(f)) {
+        score += 7 + n * 2;
+        reasons.push(`That ${f} finish she keeps catching`);
+        break;
+      }
+    }
+    for (const [type, n] of taste.types) {
+      if (card.type === type && type && type !== "Pop!") {
+        score += 6 + n;
+        if (reasons.length < 2) reasons.push(`More ${type} scale`);
+        break;
+      }
+    }
+    for (const [color, n] of taste.exclusives) {
+      if (card.color === color) {
+        score += 6 + n;
+        reasons.push(`${color} exclusive vibes`);
+        break;
+      }
+    }
+    if (taste.lovesSpecials && isSpecialFinish(card)) {
+      score += 8;
+      reasons.push("Special finish energy");
+    }
+    if (isWished(card.id)) score += 2;
+
+    return { score, reason: reasons[0] || "Matches her shelf" };
+  }
+
+  function makeRecoTile(card, reason, index) {
+    const wrap = document.createElement("div");
+    wrap.className = "reco-wrap";
+    wrap.style.animationDelay = `${Math.min(index, 12) * 0.04}s`;
+    wrap.appendChild(makeCardTile(card, index));
+    if (reason) {
+      const note = document.createElement("p");
+      note.className = "reco-reason";
+      note.textContent = reason;
+      wrap.appendChild(note);
+    }
+    return wrap;
+  }
+
+  function appendRecoShelf(parent, title, blurb, items, used) {
+    const fresh = items.filter((item) => !used.has(String(item.card.id)));
+    if (!fresh.length) return;
+    const article = document.createElement("article");
+    article.className = "reco-shelf";
+    article.innerHTML = `
+      <div class="reco-shelf-head">
+        <h3>${escapeHtml(title)}</h3>
+        ${blurb ? `<p>${escapeHtml(blurb)}</p>` : ""}
+      </div>
+    `;
+    const grid = document.createElement("div");
+    grid.className = "grid shelf-row reco-grid";
+    fresh.forEach((item, i) => {
+      used.add(String(item.card.id));
+      grid.appendChild(makeRecoTile(item.card, item.reason, i));
+    });
+    article.appendChild(grid);
+    parent.appendChild(article);
+  }
+
+  function renderForYou() {
+    if (!els.forYouShelves) return;
+    const ownedCards = [...owned].map(findCard).filter(Boolean);
+    els.forYouShelves.innerHTML = "";
+    if (els.forYouTaste) {
+      els.forYouTaste.hidden = true;
+      els.forYouTaste.innerHTML = "";
+    }
+
+    if (!ownedCards.length) {
+      if (els.forYouStatus) {
+        els.forYouStatus.textContent = "Soft picks shaped by what’s already on her shelf.";
+      }
+      if (els.forYouEmpty) {
+        els.forYouEmpty.hidden = false;
+        els.forYouEmpty.textContent =
+          "Mark a few Pops as owned, and we’ll nestle lookalike suggestions here — favourite characters, flocked finishes, exclusives, the lot.";
+      }
+      return;
+    }
+
+    const taste = buildTasteProfile(ownedCards);
+    const pills = [
+      ...taste.names.slice(0, 2).map(([k, n]) => `${k} ×${n}`),
+      ...taste.finishes.slice(0, 2).map(([k]) => k),
+      ...taste.exclusives.slice(0, 1).map(([k]) => k),
+    ];
+    if (taste.lovesSpecials) pills.unshift("Special finishes");
+    if (els.forYouTaste && pills.length) {
+      els.forYouTaste.hidden = false;
+      els.forYouTaste.innerHTML = pills
+        .filter(Boolean)
+        .slice(0, 6)
+        .map((p) => `<span class="taste-pill">${escapeHtml(p)}</span>`)
+        .join("");
+    }
+    if (els.forYouStatus) {
+      els.forYouStatus.textContent = `Reading ${taste.ownedCount} owned Pop${taste.ownedCount === 1 ? "" : "s"} for matching catches.`;
+    }
+    if (els.forYouEmpty) els.forYouEmpty.hidden = true;
+
+    const scored = [];
+    for (const card of catalog.cards) {
+      if (isOwned(card.id)) continue;
+      if (!isWishable(card.id)) continue;
+      const { score, reason } = scoreRecommendation(card, taste);
+      if (score < 8) continue;
+      scored.push({ card, score, reason });
+    }
+    scored.sort((a, b) => b.score - a.score || a.card.name.localeCompare(b.card.name));
+
+    if (!scored.length) {
+      if (els.forYouEmpty) {
+        els.forYouEmpty.hidden = false;
+        els.forYouEmpty.textContent =
+          "Her shelf is wonderfully specific — no clear lookalikes right now. Add a few more owned Pops and try again.";
+      }
+      return;
+    }
+
+    const used = new Set();
+    appendRecoShelf(
+      els.forYouShelves,
+      "Top picks for her shelf",
+      "Closest matches to the display she’s building.",
+      scored.slice(0, 12),
+      used
+    );
+
+    for (const [name] of taste.names.slice(0, 3)) {
+      const items = scored.filter((s) => (s.card.name || s.card.story) === name).slice(0, 8);
+      appendRecoShelf(
+        els.forYouShelves,
+        `More ${name}`,
+        `She already keeps catching ${name}.`,
+        items,
+        used
+      );
+    }
+
+    for (const [finish] of taste.finishes.slice(0, 2)) {
+      if (!finish || /^shared$/i.test(finish)) continue;
+      const items = scored.filter((s) => finishOf(s.card) === finish).slice(0, 8);
+      appendRecoShelf(
+        els.forYouShelves,
+        `More ${finish}`,
+        "Because that finish already lives on the shelf.",
+        items,
+        used
+      );
+    }
+
+    if (taste.lovesSpecials) {
+      const items = scored.filter((s) => isSpecialFinish(s.card)).slice(0, 10);
+      appendRecoShelf(
+        els.forYouShelves,
+        "Special & exclusive finishes",
+        "Flocked, pearlescent, jumbo — the shiny ones she gravitates to.",
+        items,
+        used
+      );
+    }
+
+    const leftovers = scored.filter((s) => !used.has(String(s.card.id))).slice(0, 10);
+    appendRecoShelf(
+      els.forYouShelves,
+      "Still worth a peek",
+      "Nearby flavours from the shelf’s pattern.",
+      leftovers,
+      used
+    );
   }
 
   async function loadComingSoon(forceLive) {

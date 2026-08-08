@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Russo+One&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=16" />
   <script>
     try {
       const saved = localStorage.getItem("ppv_universe_v1");
@@ -119,6 +119,7 @@
   <nav class="tabs" aria-label="Gallery sections">
     <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">Library</button>
     <button type="button" class="tab" data-tab="owned" id="tabOwned">Owned <span class="tab-count" id="ownedTabCount" hidden>0</span></button>
+    <button type="button" class="tab" data-tab="foryou" id="tabForYou">For You</button>
     <button type="button" class="tab" data-tab="wishlist" id="tabWishlist">Wishlist <span class="tab-count" id="wishTabCount" hidden>0</span></button>
     <button type="button" class="tab" data-tab="coming" id="tabComing">Coming Soon</button>
   </nav>
@@ -197,6 +198,16 @@
     </div>
     <div class="grid shelf-row" id="ownedGrid" aria-live="polite"></div>
     <p class="empty" id="ownedEmpty" hidden>No owned Pops yet. Tap the checkmark on any Pop to mark it owned.</p>
+  </section>
+
+  <section id="panelForYou" class="gallery foryou" hidden>
+    <div class="section-head">
+      <h2>For You</h2>
+      <p id="forYouStatus">Soft picks shaped by what’s already on her shelf.</p>
+    </div>
+    <div class="taste-pills" id="forYouTaste" hidden></div>
+    <div id="forYouShelves"></div>
+    <p class="empty" id="forYouEmpty" hidden>Mark a few Pops as owned, and we’ll nestle lookalike suggestions here.</p>
   </section>
 
   <section id="panelWishlist" class="gallery wishlist" hidden>
@@ -346,12 +357,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="family-vault-config.js"></script>
   <script src="family-list-sync.js?v=shared3"></script>
-  <script src="app.js?v=ui16" defer></script>
+  <script src="app.js?v=ui17" defer></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("service-worker.js?v=10")
+          .register("service-worker.js?v=11")
           .then((reg) => {
             if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
             reg.update().catch(() => {});

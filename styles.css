@@ -811,10 +811,68 @@ html.play-intro body {
 .favorites,
 .gallery,
 .wishlist,
+.foryou,
 .coming {
   width: min(1120px, calc(100% - 2 * var(--pad)));
   margin: 0 auto;
   padding: 1.25rem 0 0.75rem;
+}
+
+.taste-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 1.25rem;
+}
+
+.taste-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.reco-shelf {
+  margin: 0 0 1.9rem;
+}
+
+.reco-shelf-head {
+  margin: 0 0 0.75rem;
+}
+
+.reco-shelf-head h3 {
+  margin: 0;
+  font-family: var(--font-display, "Sora", sans-serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  font-weight: 700;
+}
+
+.reco-shelf-head p {
+  margin: 0.28rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.reco-grid {
+  align-items: start;
+}
+
+.reco-wrap {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.reco-reason {
+  margin: 0;
+  padding: 0 0.1rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
 }
 
 .favorites { padding-top: 0.15rem; }
