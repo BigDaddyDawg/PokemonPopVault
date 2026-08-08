@@ -1039,15 +1039,28 @@
       if (selectedFinish && finish !== selectedFinish) return;
       const block = document.createElement("section");
       block.className = "finish-block shelf-bay";
-      block.innerHTML = `
-        <div class="finish-head">
-          <h3 class="finish-label">${escapeHtml(finish)} <span class="finish-count">${cards.length}</span></h3>
-          <p class="finish-note">${escapeHtml(FINISH_BLURBS[finish] || "Special finish")}</p>
-        </div>
+      block.dataset.finish = finish;
+
+      const head = document.createElement("button");
+      head.type = "button";
+      head.className = "finish-head";
+      head.setAttribute("aria-expanded", "true");
+      head.innerHTML = `
+        <span class="finish-head-copy">
+          <span class="finish-label">${escapeHtml(finish)} <span class="finish-count">${cards.length}</span></span>
+          <span class="finish-note">${escapeHtml(FINISH_BLURBS[finish] || "Special finish")}</span>
+        </span>
+        <span class="finish-chevron" aria-hidden="true"></span>
       `;
+      head.addEventListener("click", () => {
+        const collapsed = block.classList.toggle("is-collapsed");
+        head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      });
+
       const grid = document.createElement("div");
       grid.className = "grid shelf-row";
       cards.forEach((card, i) => grid.appendChild(makeCardTile(card, i)));
+      block.appendChild(head);
       block.appendChild(grid);
       frag.appendChild(block);
     };

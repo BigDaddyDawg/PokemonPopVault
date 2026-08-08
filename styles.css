@@ -810,10 +810,37 @@ html.play-intro body {
 }
 
 .finish-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.15rem 0.15rem 0.55rem;
+  border: 0;
+  border-bottom: 1px solid rgba(238, 21, 21, 0.1);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.finish-head:hover .finish-label {
+  color: var(--poke-red);
+}
+
+.finish-head:focus-visible {
+  outline: 2px solid rgba(238, 21, 21, 0.45);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.finish-head-copy {
   display: grid;
   gap: 0.15rem;
-  padding: 0 0.15rem 0.45rem;
-  border-bottom: 1px solid rgba(238, 21, 21, 0.1);
+  min-width: 0;
 }
 
 .finish-label {
@@ -823,6 +850,35 @@ html.play-intro body {
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--ink);
+  transition: color 0.15s ease;
+}
+
+.finish-chevron {
+  flex: 0 0 auto;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.2rem;
+  border-right: 2px solid var(--poke-red);
+  border-bottom: 2px solid var(--poke-red);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.finish-block.is-collapsed .finish-chevron {
+  transform: rotate(-45deg);
+}
+
+.finish-block.is-collapsed {
+  gap: 0;
+}
+
+.finish-block.is-collapsed .finish-head {
+  padding-bottom: 0.15rem;
+  border-bottom-color: transparent;
+}
+
+.finish-block.is-collapsed .shelf-row {
+  display: none;
 }
 
 .finish-count {
