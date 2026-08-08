@@ -1335,7 +1335,7 @@
     for (const [f, n] of taste.finishes) {
       if (finish === f && f && !/^shared$/i.test(f)) {
         score += 7 + n * 2;
-        reasons.push(`That ${f} finish she keeps catching`);
+        reasons.push(`That ${f} finish he keeps catching`);
         break;
       }
     }
@@ -1359,7 +1359,7 @@
     }
     if (isWished(card.id)) score += 2;
 
-    return { score, reason: reasons[0] || "Matches her shelf" };
+    return { score, reason: reasons[0] || "Matches his shelf" };
   }
 
   function makeRecoTile(card, reason, index) {
@@ -1408,7 +1408,7 @@
 
     if (!ownedCards.length) {
       if (els.forYouStatus) {
-        els.forYouStatus.textContent = "Soft picks shaped by what’s already on her shelf.";
+        els.forYouStatus.textContent = "Soft picks shaped by what’s already on his shelf.";
       }
       if (els.forYouEmpty) {
         els.forYouEmpty.hidden = false;
@@ -1452,7 +1452,7 @@
       if (els.forYouEmpty) {
         els.forYouEmpty.hidden = false;
         els.forYouEmpty.textContent =
-          "Her shelf is wonderfully specific — no clear lookalikes right now. Add a few more owned Pops and try again.";
+          "His shelf is wonderfully specific — no clear lookalikes right now. Add a few more owned Pops and try again.";
       }
       return;
     }
@@ -1460,8 +1460,8 @@
     const used = new Set();
     appendRecoShelf(
       els.forYouShelves,
-      "Top picks for her shelf",
-      "Closest matches to the display she’s building.",
+      "Top picks for his shelf",
+      "Closest matches to the display he’s building.",
       scored.slice(0, 12),
       used
     );
@@ -1471,7 +1471,7 @@
       appendRecoShelf(
         els.forYouShelves,
         `More ${name}`,
-        `She already keeps catching ${name}.`,
+        `He already keeps catching ${name}.`,
         items,
         used
       );
@@ -1494,7 +1494,7 @@
       appendRecoShelf(
         els.forYouShelves,
         "Special & exclusive finishes",
-        "Flocked, pearlescent, jumbo — the shiny ones she gravitates to.",
+        "Flocked, pearlescent, jumbo — the shiny ones he gravitates to.",
         items,
         used
       );
@@ -1524,7 +1524,7 @@
       if (!bakedRes.ok) throw new Error(`${universe.comingUrl} ${bakedRes.status}`);
       comingData = await bakedRes.json();
 
-      // Live news pass — official site via CORS-friendly reader when she opens the tab
+      // Live news pass — official site via CORS-friendly reader when he opens the tab
       let liveNews = null;
       try {
         liveNews = await fetchLiveNews();

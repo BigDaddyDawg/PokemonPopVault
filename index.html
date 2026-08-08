@@ -203,7 +203,7 @@
   <section id="panelForYou" class="gallery foryou" hidden>
     <div class="section-head">
       <h2>For You</h2>
-      <p id="forYouStatus">Soft picks shaped by what’s already on her shelf.</p>
+      <p id="forYouStatus">Soft picks shaped by what’s already on his shelf.</p>
     </div>
     <div class="taste-pills" id="forYouTaste" hidden></div>
     <div id="forYouShelves"></div>
@@ -357,12 +357,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="family-vault-config.js"></script>
   <script src="family-list-sync.js?v=shared3"></script>
-  <script src="app.js?v=ui17" defer></script>
+  <script src="app.js?v=ui18" defer></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("service-worker.js?v=11")
+          .register("service-worker.js?v=12")
           .then((reg) => {
             if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
             reg.update().catch(() => {});
