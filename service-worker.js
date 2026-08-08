@@ -1,4 +1,4 @@
-const CACHE_NAME = "poke-pop-vault-static-v7";
+const CACHE_NAME = "poke-pop-vault-static-v9";
 const CORE_ASSETS = [
   "./",
   "index.html",
@@ -11,6 +11,8 @@ const CORE_ASSETS = [
   "apple-touch-icon.png",
   "data/cards.json",
   "data/coming-soon.json",
+  "data/dbz-cards.json",
+  "data/dbz-coming-soon.json",
 ];
 
 /** Network-first with offline fallback — keeps HTML/JS/JSON fresh after publishes. */
@@ -73,6 +75,8 @@ self.addEventListener("fetch", (event) => {
   if (
     path.endsWith("/cards.json") ||
     path.endsWith("/coming-soon.json") ||
+    path.endsWith("/dbz-cards.json") ||
+    path.endsWith("/dbz-coming-soon.json") ||
     path.endsWith("/app.js") ||
     path.endsWith("/styles.css") ||
     path.endsWith("/service-worker.js") ||

@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-universe="pokemon">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Poké Pop Vault — a personal gallery of every Pokémon Funko Pop! ever released." />
-  <meta name="theme-color" content="#ee1515" />
+  <meta name="description" content="Pop Vault — Pokémon and Dragon Ball Funko Pop! galleries in one place." />
+  <meta name="theme-color" content="#ee1515" id="themeColorMeta" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Pop Vault" />
-  <title>Poké Pop Vault · Pokémon Funko Gallery</title>
-  <link rel="manifest" href="manifest.webmanifest?v=7" />
+  <title>Pop Vault · Pokémon &amp; Dragon Ball Funko Gallery</title>
+  <link rel="manifest" href="manifest.webmanifest?v=8" />
   <link rel="icon" href="icon.svg?v=7" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Russo+One&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=14" />
   <script>
     try {
+      const saved = localStorage.getItem("ppv_universe_v1");
+      if (saved === "dragonball" || saved === "pokemon") {
+        document.documentElement.setAttribute("data-universe", saved);
+        if (saved === "dragonball") {
+          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#f57c00");
+        }
+      }
       if (
         sessionStorage.getItem("ppv_intro_seen") === "1" ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -56,13 +63,13 @@
           </div>
           <div class="pop-label">
             <span class="pop-logo">POP!</span>
-            <span class="pop-line">POKÉMON</span>
+            <span class="pop-line" id="introLine">POKÉMON</span>
           </div>
         </div>
       </div>
       <div class="intro-copy">
-        <p class="intro-brand">Poké Pop Vault</p>
-        <p class="intro-line">Open the collection.</p>
+        <p class="intro-brand" id="introBrand">Poké Pop Vault</p>
+        <p class="intro-line" id="introTag">Open the collection.</p>
       </div>
     </div>
   </div>
@@ -70,8 +77,8 @@
   <header class="topbar" id="top">
     <div class="topbar-inner">
       <div class="brand-block">
-        <h1 class="brand">Poké Pop Vault</h1>
-        <p class="tagline">Every Pokémon Funko Pop! — your shelf, your story.</p>
+        <h1 class="brand" id="brandTitle">Poké Pop Vault</h1>
+        <p class="tagline" id="brandTagline">Every Pokémon Funko Pop! — your shelf, your story.</p>
       </div>
       <div class="vault-stats" id="vaultStats" aria-live="polite">
         <div class="stat">
@@ -100,6 +107,13 @@
     </div>
   </header>
 
+  <nav class="universe-bar" aria-label="Collection universe">
+    <div class="universe-tabs" role="tablist">
+      <button type="button" class="universe-tab is-active" data-universe="pokemon" id="universePokemon" role="tab" aria-selected="true">Pokemon</button>
+      <button type="button" class="universe-tab" data-universe="dragonball" id="universeDragonball" role="tab" aria-selected="false">Dragonball</button>
+    </div>
+  </nav>
+
   <nav class="tabs" aria-label="Gallery sections">
     <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">Library</button>
     <button type="button" class="tab" data-tab="owned" id="tabOwned">Owned <span class="tab-count" id="ownedTabCount" hidden>0</span></button>
@@ -108,36 +122,14 @@
   </nav>
 
   <div id="panelCollection">
-  <section class="favorites" aria-label="Favorite Pokémon">
+  <section class="favorites" aria-label="Quick picks">
     <div class="section-head section-head-row">
       <div>
-        <h2>Quick catch</h2>
-        <p>Jump to the legends on your radar.</p>
+        <h2 id="favHeading">Quick catch</h2>
+        <p id="favBlurb">Jump to the legends on your radar.</p>
       </div>
     </div>
-    <div class="fav-grid" id="favGrid">
-      <button class="fav-card fav-pika" type="button" data-story="Pikachu">
-        <span class="fav-art" id="favArtPika"></span>
-        <span class="fav-copy">
-          <span class="fav-kicker">Electric</span>
-          <span class="fav-title">Pikachu</span>
-        </span>
-      </button>
-      <button class="fav-card fav-lucario" type="button" data-story="Lucario">
-        <span class="fav-art" id="favArtLucario"></span>
-        <span class="fav-copy">
-          <span class="fav-kicker">Fighting / Steel</span>
-          <span class="fav-title">Lucario</span>
-        </span>
-      </button>
-      <button class="fav-card fav-char" type="button" data-story="Charizard">
-        <span class="fav-art" id="favArtChar"></span>
-        <span class="fav-copy">
-          <span class="fav-kicker">Fire / Flying</span>
-          <span class="fav-title">Charizard</span>
-        </span>
-      </button>
-    </div>
+    <div class="fav-grid" id="favGrid"></div>
   </section>
 
   <main id="collection" class="gallery">
@@ -154,7 +146,7 @@
         <input id="search" type="search" placeholder="Search name, number, variant…" autocomplete="off" />
       </label>
       <label>
-        <span>Series</span>
+        <span id="seriesFilterLabel">Series</span>
         <select id="setFilter">
           <option value="">All series</option>
         </select>
@@ -166,9 +158,9 @@
         </select>
       </label>
       <label>
-        <span>Pokémon</span>
+        <span id="storyFilterLabel">Pokémon</span>
         <select id="storyFilter">
-          <option value="">All Pokémon</option>
+          <option value="" id="storyFilterAll">All Pokémon</option>
         </select>
       </label>
       <label>
@@ -186,7 +178,7 @@
     <div class="active-pills" id="activePills" hidden></div>
     <div class="catalog" id="cardGrid" aria-live="polite"></div>
     <div class="sentinel" id="sentinel" aria-hidden="true"></div>
-    <p class="empty" id="emptyState" hidden>No Pops match that search. Try another trainer tip.</p>
+    <p class="empty" id="emptyState" hidden>No Pops match that search. Try another tip.</p>
   </main>
   </div>
 
@@ -223,7 +215,7 @@
   <section id="panelComing" class="coming" hidden>
     <div class="section-head">
       <h2>Coming Soon</h2>
-      <p id="comingStatus">Scouting the next wave of Pop! Pokémon…</p>
+      <p id="comingStatus">Scouting the next wave of Pops…</p>
       <button type="button" class="refresh-btn" id="comingRefresh">Refresh news &amp; reveals</button>
     </div>
 
@@ -239,18 +231,41 @@
 
     <div class="coming-block">
       <h3 class="coming-label">Newly spotted Pops</h3>
-      <p class="coming-note" id="revealsNote">As new Pokémon Pops hit the shop, they’ll appear here.</p>
+      <p class="coming-note" id="revealsNote">As new Pops hit the shop, they’ll appear here.</p>
       <div class="grid shelf-row" id="revealsGrid"></div>
     </div>
   </section>
 
   <footer class="site-footer">
-    <p>Poké Pop Vault · fan gallery · data via PriceCharting, Funko.com &amp; community checklists</p>
-    <p class="fine">Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Pokémon and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Game Freak, or Funko.</p>
+    <p id="footerMain">Pop Vault · fan gallery · data via PriceCharting, Funko.com &amp; community checklists</p>
+    <p class="fine" id="footerFine">Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Character names and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Toei Animation, Bird Studio / Shueisha, or Funko.</p>
   </footer>
 
   <div class="toast" id="caughtToast" hidden role="status" aria-live="polite"></div>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <div class="universe-fx" id="universeTransition" hidden aria-hidden="true">
+    <div class="universe-fx-stage universe-fx-poke" aria-hidden="true">
+      <div class="fx-pokeball">
+        <div class="fx-pokeball-top"></div>
+        <div class="fx-pokeball-bottom"></div>
+        <div class="fx-pokeball-band"></div>
+        <div class="fx-pokeball-button"></div>
+      </div>
+    </div>
+    <div class="universe-fx-stage universe-fx-db" aria-hidden="true">
+      <div class="fx-dragonballs">
+        <span class="fx-dball"></span>
+        <span class="fx-dball"></span>
+        <span class="fx-dball"></span>
+        <span class="fx-dball"></span>
+        <span class="fx-dball"></span>
+        <span class="fx-dball"></span>
+        <span class="fx-dball"></span>
+      </div>
+    </div>
+    <div class="universe-fx-flash"></div>
+  </div>
 
   <dialog class="modal" id="cardModal">
     <div class="modal-shell">
@@ -295,12 +310,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="family-vault-config.js"></script>
   <script src="family-list-sync.js?v=shared3"></script>
-  <script src="app.js?v=ui11" defer></script>
+  <script src="app.js?v=ui15" defer></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("service-worker.js?v=7")
+          .register("service-worker.js?v=9")
           .then((reg) => {
             if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
             reg.update().catch(() => {});

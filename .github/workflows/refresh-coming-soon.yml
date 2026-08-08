@@ -18,11 +18,13 @@ jobs:
           python-version: "3.12"
       - name: Refresh coming-soon catalog
         run: python scripts/refresh_coming_soon.py
+      - name: Refresh Dragon Ball coming-soon
+        run: python scripts/refresh_dbz_coming_soon.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/coming-soon.json
+          git add data/coming-soon.json data/dbz-coming-soon.json
           if git diff --staged --quiet; then
             echo "No coming-soon changes"
           else

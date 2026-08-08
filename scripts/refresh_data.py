@@ -652,6 +652,24 @@ def main() -> None:
         row["priceGbp"] = usd_to_gbp(row.get("priceUsd"), rate)
     funko_rows = scrape_funko()
     cards = build_cards(pc_rows, funko_rows)
+    cards = [
+        c
+        for c in cards
+        if not re.search(
+            r"metallic",
+            f"{c.get('rarity','')} {c.get('version','')} {c.get('fullName','')} {c.get('name','')}",
+            re.I,
+        )
+    ]
+    cards = [
+        c
+        for c in cards
+        if not re.search(
+            r"\bbitty\b|\bkeychain\b|\bpocket pop\b|\(\s*mini\s*\)|(?<![a-z])mini(?![a-z])",
+            f"{c.get('type','')} {c.get('version','')} {c.get('fullName','')} {c.get('name','')}",
+            re.I,
+        )
+    ]
 
     sets_map = {}
     for c in cards:
@@ -670,7 +688,6 @@ def main() -> None:
         "Exclusive",
         "Flocked",
         "Diamond",
-        "Metallic",
         "Pearlescent",
         "Soft Color",
     ]

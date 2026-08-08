@@ -19,13 +19,17 @@ jobs:
           python-version: "3.12"
       - name: Refresh full catalogue
         run: python scripts/refresh_data.py
+      - name: Refresh Dragon Ball catalogue
+        run: python scripts/refresh_dbz_data.py
       - name: Refresh coming-soon
         run: python scripts/refresh_coming_soon.py
+      - name: Refresh Dragon Ball coming-soon
+        run: python scripts/refresh_dbz_coming_soon.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/cards.json data/coming-soon.json || true
+          git add data/cards.json data/coming-soon.json data/dbz-cards.json data/dbz-coming-soon.json || true
           if git diff --staged --quiet; then
             echo "No catalogue changes"
           else

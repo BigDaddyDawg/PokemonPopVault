@@ -1,17 +1,14 @@
 (() => {
   const PAGE_SIZE = 48;
-  const WISHLIST_KEY = "pokepopvault_wishlist_v1";
-  const OWNED_KEY = "pokepopvault_owned_v1";
+  const UNIVERSE_KEY = "ppv_universe_v1";
   const NEWS_URL = "https://funko.com/gb/funko-blog/";
   const LIVE_NEWS_URL = "https://r.jina.ai/https://funko.com/gb/funko-blog/";
-  const SHOP_URL = "https://funko.com/gb/search?q=pokemon";
   /** Funko finish groups — Shared/Exclusive count as Standard. */
   const FINISH_ORDER = [
     "Standard",
     "Jumbo",
     "Flocked",
     "Diamond",
-    "Metallic",
     "Pearlescent",
     "Soft Color",
   ];
@@ -20,17 +17,111 @@
     Jumbo: "10-inch / jumbo figures",
     Flocked: "Fuzzy flocked finishes",
     Diamond: "Diamond Collection sparkle",
-    Metallic: "Metallic paint finishes",
-    Pearlescent: "Pearlescent Pokémon Center finishes",
+    Pearlescent: "Special pearlescent finishes",
     "Soft Color": "Soft Color pastel finishes",
   };
-  const FAV_PICKS = {
-    Pikachu: ["Pikachu"],
-    Lucario: ["Lucario"],
-    Charizard: ["Charizard"],
+
+  const UNIVERSES = {
+    pokemon: {
+      id: "pokemon",
+      tabLabel: "Pokemon",
+      brand: "Poké Pop Vault",
+      tagline: "Every Pokémon Funko Pop! — your shelf, your story.",
+      introLine: "POKÉMON",
+      introTag: "Open the collection.",
+      catalogUrl: "./data/cards.json?v=15",
+      comingUrl: "./data/coming-soon.json?v=15",
+      wishlistKey: "pokepopvault_wishlist_v1",
+      ownedKey: "pokepopvault_owned_v1",
+      appSlug: "pokepopvault",
+      shopUrl: "https://funko.com/gb/search?q=pokemon",
+      themeColor: "#ee1515",
+      toastWord: "Caught!",
+      progressWord: "caught",
+      storyLabel: "Pokémon",
+      storyAll: "All Pokémon",
+      seriesLabel: "Series",
+      seriesAll: "All series",
+      seriesOptions: null,
+      favHeading: "Quick catch",
+      favBlurb: "Jump to the legends on your radar.",
+      comingScout: "Scouting the next wave of Pop! Pokémon…",
+      revealsEmpty: "No early Pop art yet — as soon as new Pokémon are teased, they’ll land here.",
+      emptySearch: "No Pops match that search. Try another trainer tip.",
+      modalStoryFallback: "Pokémon",
+      footerMain: "Poké Pop Vault · fan gallery · data via PriceCharting, Funko.com & community checklists",
+      footerFine:
+        "Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Pokémon and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Game Freak, or Funko.",
+      confetti: ["#ee1515", "#ffffff", "#ffcb05", "#222224", "#ff6b6b"],
+      favorites: [
+        { story: "Pikachu", title: "Pikachu", kicker: "Electric", className: "fav-pika" },
+        { story: "Lucario", title: "Lucario", kicker: "Fighting / Steel", className: "fav-lucario" },
+        { story: "Charizard", title: "Charizard", kicker: "Fire / Flying", className: "fav-char" },
+      ],
+    },
+    dragonball: {
+      id: "dragonball",
+      tabLabel: "Dragonball",
+      brand: "Dragon Ball Pop Vault",
+      tagline: "Every Dragon Ball Funko Pop! — power up your shelf.",
+      introLine: "DRAGON BALL",
+      introTag: "Summon the collection.",
+      catalogUrl: "./data/dbz-cards.json?v=15",
+      comingUrl: "./data/dbz-coming-soon.json?v=15",
+      wishlistKey: "dbzpopvault_wishlist_v1",
+      ownedKey: "dbzpopvault_owned_v1",
+      appSlug: "dbzpopvault",
+      shopUrl: "https://funko.com/gb/search?q=dragon+ball",
+      themeColor: "#f57c00",
+      toastWord: "Collected!",
+      progressWord: "collected",
+      storyLabel: "Character",
+      storyAll: "All characters",
+      seriesLabel: "Series",
+      seriesAll: "All series",
+      seriesOptions: [
+        { code: "DB", name: "Dragonball" },
+        { code: "Z", name: "Z" },
+        { code: "GT", name: "GT" },
+        { code: "SUPER", name: "Super" },
+        { code: "DAIMA", name: "Daima" },
+      ],
+      favHeading: "Power picks",
+      favBlurb: "Jump to the strongest on your radar.",
+      comingScout: "Scouting the next wave of Dragon Ball Pops…",
+      revealsEmpty: "No early Pop art yet — as soon as new Dragon Ball figures are teased, they’ll land here.",
+      emptySearch: "No Pops match that search. Try another wish.",
+      modalStoryFallback: "Dragon Ball",
+      footerMain: "Dragon Ball Pop Vault · fan gallery · data via PriceCharting, Funko.com & community checklists",
+      footerFine:
+        "Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Dragon Ball and Funko Pop! are trademarks of their respective owners. Not affiliated with Toei Animation, Bird Studio / Shueisha, or Funko.",
+      confetti: ["#f57c00", "#ffffff", "#ffd54f", "#15151c", "#ff9800"],
+      favorites: [
+        { story: "Goku", title: "Goku", kicker: "Saiyan", className: "fav-pika" },
+        { story: "Vegeta", title: "Vegeta", kicker: "Prince", className: "fav-lucario" },
+        { story: "Frieza", title: "Frieza", kicker: "Emperor", className: "fav-char" },
+      ],
+    },
   };
+
   const HEART_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20.2s-6.7-4.2-9.1-8.1C1.2 9.4 2.1 6.4 5 5.4c1.8-.6 3.7.1 4.8 1.5C11 5.5 12.9 4.8 14.7 5.4c2.9 1 3.8 4 2.1 6.7-2.4 3.9-9.1 8.1-9.1 8.1z"/></svg>`;
   const CHECK_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l5 5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  function readSavedUniverse() {
+    try {
+      const saved = localStorage.getItem(UNIVERSE_KEY);
+      if (saved && UNIVERSES[saved]) return saved;
+    } catch (_) {}
+    return "pokemon";
+  }
+
+  let universeId = readSavedUniverse();
+  let universe = UNIVERSES[universeId];
+  let SHOP_URL = universe.shopUrl;
+  let WISHLIST_KEY = universe.wishlistKey;
+  let OWNED_KEY = universe.ownedKey;
+  let switchingUniverse = false;
+  let uiBound = false;
 
   const els = {
     grid: document.getElementById("cardGrid"),
@@ -91,6 +182,23 @@
     caughtProgressLabel: document.getElementById("caughtProgressLabel"),
     caughtToast: document.getElementById("caughtToast"),
     confetti: document.getElementById("confetti"),
+    brandTitle: document.getElementById("brandTitle"),
+    brandTagline: document.getElementById("brandTagline"),
+    introLine: document.getElementById("introLine"),
+    introBrand: document.getElementById("introBrand"),
+    introTag: document.getElementById("introTag"),
+    favGrid: document.getElementById("favGrid"),
+    favHeading: document.getElementById("favHeading"),
+    favBlurb: document.getElementById("favBlurb"),
+    storyFilterLabel: document.getElementById("storyFilterLabel"),
+    storyFilterAll: document.getElementById("storyFilterAll"),
+    seriesFilterLabel: document.getElementById("seriesFilterLabel"),
+    footerMain: document.getElementById("footerMain"),
+    footerFine: document.getElementById("footerFine"),
+    universePokemon: document.getElementById("universePokemon"),
+    universeDragonball: document.getElementById("universeDragonball"),
+    universeTransition: document.getElementById("universeTransition"),
+    themeColorMeta: document.querySelector('meta[name="theme-color"]'),
   };
 
   /** @type {{cards: any[], sets: any[], rarities: string[], stories: string[], count?: number}} */
@@ -119,6 +227,7 @@
   let ownedSync = null;
 
   initStars();
+  applyUniverseChrome(false);
   playIntro();
   loadWishlist();
   loadOwned();
@@ -126,19 +235,123 @@
 
   async function boot() {
     try {
-      const res = await fetch("./data/cards.json");
+      const res = await fetch(universe.catalogUrl);
       if (!res.ok) throw new Error(`Failed to load catalog (${res.status})`);
       catalog = await res.json();
       await initFamilyVault();
       fillFilters();
       paintFavorites();
-      bindUI();
+      if (!uiBound) {
+        bindUI();
+        uiBound = true;
+      }
       applyFilters();
       updateTrackerChrome();
       maybeOpenTabFromHash();
     } catch (err) {
       els.countLabel.textContent = "The vault wouldn’t open. Try refreshing.";
       console.error(err);
+    }
+  }
+
+  function applyUniverseChrome(updateIntroCopy) {
+    document.documentElement.setAttribute("data-universe", universeId);
+    if (els.themeColorMeta) els.themeColorMeta.setAttribute("content", universe.themeColor);
+    if (els.brandTitle) els.brandTitle.textContent = universe.brand;
+    if (els.brandTagline) els.brandTagline.textContent = universe.tagline;
+    if (updateIntroCopy !== false) {
+      if (els.introLine) els.introLine.textContent = universe.introLine;
+      if (els.introBrand) els.introBrand.textContent = universe.brand;
+      if (els.introTag) els.introTag.textContent = universe.introTag;
+    } else {
+      if (els.introLine) els.introLine.textContent = universe.introLine;
+      if (els.introBrand) els.introBrand.textContent = universe.brand;
+      if (els.introTag) els.introTag.textContent = universe.introTag;
+    }
+    if (els.favHeading) els.favHeading.textContent = universe.favHeading;
+    if (els.favBlurb) els.favBlurb.textContent = universe.favBlurb;
+    if (els.storyFilterLabel) els.storyFilterLabel.textContent = universe.storyLabel;
+    if (els.storyFilterAll) els.storyFilterAll.textContent = universe.storyAll;
+    if (els.seriesFilterLabel) els.seriesFilterLabel.textContent = universe.seriesLabel || "Series";
+    if (els.comingStatus && !comingLoaded) els.comingStatus.textContent = universe.comingScout;
+    if (els.revealsNote) els.revealsNote.textContent = universe.revealsEmpty;
+    if (els.empty) els.empty.textContent = universe.emptySearch;
+    if (els.footerMain) els.footerMain.textContent = universe.footerMain;
+    if (els.footerFine) els.footerFine.textContent = universe.footerFine;
+    document.title =
+      universeId === "dragonball"
+        ? "Dragon Ball Pop Vault · Funko Gallery"
+        : "Poké Pop Vault · Pokémon Funko Gallery";
+
+    document.querySelectorAll(".universe-tab").forEach((btn) => {
+      const active = btn.getAttribute("data-universe") === universeId;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-selected", active ? "true" : "false");
+    });
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+  }
+
+  async function playUniverseTransition(targetId) {
+    const layer = els.universeTransition;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!layer || reduce) return;
+    layer.hidden = false;
+    layer.setAttribute("aria-hidden", "false");
+    layer.dataset.fx = targetId;
+    layer.classList.remove("is-open", "is-flash");
+    layer.classList.add("is-on");
+    await sleep(targetId === "dragonball" ? 1150 : 950);
+    layer.classList.add("is-open");
+    await sleep(380);
+    layer.classList.add("is-flash");
+    await sleep(280);
+    layer.classList.remove("is-on", "is-open", "is-flash");
+    layer.hidden = true;
+    layer.setAttribute("aria-hidden", "true");
+  }
+
+  async function switchUniverse(nextId) {
+    if (!UNIVERSES[nextId] || nextId === universeId || switchingUniverse) return;
+    switchingUniverse = true;
+    try {
+      await playUniverseTransition(nextId);
+      universeId = nextId;
+      universe = UNIVERSES[universeId];
+      SHOP_URL = universe.shopUrl;
+      WISHLIST_KEY = universe.wishlistKey;
+      OWNED_KEY = universe.ownedKey;
+      try {
+        localStorage.setItem(UNIVERSE_KEY, universeId);
+      } catch (_) {}
+
+      if (wishSync?.unsubscribe) wishSync.unsubscribe();
+      if (ownedSync?.unsubscribe) ownedSync.unsubscribe();
+      wishSync = null;
+      ownedSync = null;
+
+      comingLoaded = false;
+      comingBusy = false;
+      comingData = null;
+      comingDisplayCards = [];
+      modalCardId = null;
+      if (els.modal?.open) els.modal.close();
+
+      applyUniverseChrome(true);
+      if (els.search) els.search.value = "";
+      if (els.setFilter) els.setFilter.value = "";
+      if (els.rarityFilter) els.rarityFilter.value = "";
+      if (els.storyFilter) els.storyFilter.value = "";
+      if (els.ownFilter) els.ownFilter.value = "";
+      loadWishlist();
+      loadOwned();
+      await boot();
+      showTab("collection");
+      burstConfetti();
+    } finally {
+      switchingUniverse = false;
     }
   }
 
@@ -180,7 +393,7 @@
     if (reduce) return;
     layer.innerHTML = "";
     layer.classList.add("is-on");
-    const colors = ["#ee1515", "#ffffff", "#ffcb05", "#222224", "#ff6b6b"];
+    const colors = universe.confetti || ["#ee1515", "#ffffff", "#ffcb05", "#222224", "#ff6b6b"];
     const count = 48;
     for (let i = 0; i < count; i++) {
       const bit = document.createElement("span");
@@ -210,7 +423,7 @@
     if (!toast || !card) return;
     const name = card.name || card.fullName || "Pop";
     const price = priceOf(card);
-    toast.innerHTML = `<strong>Caught!</strong> <span>${escapeHtml(name)}</span>${
+    toast.innerHTML = `<strong>${escapeHtml(universe.toastWord)}</strong> <span>${escapeHtml(name)}</span>${
       price ? ` <em>${escapeHtml(price)}</em>` : ""
     }`;
     toast.hidden = false;
@@ -229,7 +442,7 @@
   async function initFamilyVault() {
     if (!window.FamilyListSync?.create) return;
     wishSync = window.FamilyListSync.create({
-      app: "pokepopvault",
+      app: universe.appSlug,
       listType: "wishlist",
       storageKey: WISHLIST_KEY,
       onRemoteChange: (ids) => {
@@ -241,7 +454,7 @@
       },
     });
     ownedSync = window.FamilyListSync.create({
-      app: "pokepopvault",
+      app: universe.appSlug,
       listType: "owned",
       storageKey: OWNED_KEY,
       onRemoteChange: (ids) => {
@@ -344,44 +557,74 @@
   }
 
   function fillFilters() {
-    for (const set of catalog.sets) {
-      const opt = document.createElement("option");
-      opt.value = set.code;
-      opt.textContent = set.name;
-      els.setFilter.appendChild(opt);
+    if (els.setFilter) {
+      const allLabel = universe.seriesAll || "All series";
+      els.setFilter.innerHTML = `<option value="">${allLabel}</option>`;
+      const seriesOpts =
+        Array.isArray(universe.seriesOptions) && universe.seriesOptions.length
+          ? universe.seriesOptions
+          : (catalog.sets || []).map((s) => ({ code: s.code, name: s.name }));
+      for (const set of seriesOpts) {
+        const opt = document.createElement("option");
+        opt.value = set.code;
+        opt.textContent = set.name;
+        els.setFilter.appendChild(opt);
+      }
     }
-    for (const finish of FINISH_ORDER) {
-      const opt = document.createElement("option");
-      opt.value = finish;
-      opt.textContent = finish;
-      els.rarityFilter.appendChild(opt);
+    if (els.rarityFilter) {
+      els.rarityFilter.innerHTML = `<option value="">All finishes</option>`;
+      for (const finish of FINISH_ORDER) {
+        const opt = document.createElement("option");
+        opt.value = finish;
+        opt.textContent = finish;
+        els.rarityFilter.appendChild(opt);
+      }
     }
-    for (const story of catalog.stories) {
-      const opt = document.createElement("option");
-      opt.value = story;
-      opt.textContent = story;
-      els.storyFilter.appendChild(opt);
+    if (els.storyFilter) {
+      els.storyFilter.innerHTML = "";
+      const all = document.createElement("option");
+      all.value = "";
+      all.id = "storyFilterAll";
+      all.textContent = universe.storyAll;
+      els.storyFilter.appendChild(all);
+      els.storyFilterAll = all;
+      for (const story of catalog.stories) {
+        const opt = document.createElement("option");
+        opt.value = story;
+        opt.textContent = story;
+        els.storyFilter.appendChild(opt);
+      }
     }
   }
 
   function paintFavorites() {
-    const map = {
-      Pikachu: "favArtPika",
-      Lucario: "favArtLucario",
-      Charizard: "favArtChar",
-    };
-    for (const [story, id] of Object.entries(map)) {
-      const art = document.getElementById(id);
-      if (!art) continue;
-      const names = FAV_PICKS[story] || [];
+    const grid = els.favGrid;
+    if (!grid) return;
+    grid.innerHTML = "";
+    for (const fav of universe.favorites) {
+      const btn = document.createElement("button");
+      btn.className = `fav-card ${fav.className || ""}`.trim();
+      btn.type = "button";
+      btn.dataset.story = fav.story;
+      const artId = `favArt-${universeId}-${fav.story.replace(/\s+/g, "")}`;
+      btn.innerHTML = `
+        <span class="fav-art" id="${artId}"></span>
+        <span class="fav-copy">
+          <span class="fav-kicker">${escapeHtml(fav.kicker || "")}</span>
+          <span class="fav-title">${escapeHtml(fav.title || fav.story)}</span>
+        </span>
+      `;
+      const art = btn.querySelector(".fav-art");
       const card =
         catalog.cards.find(
           (c) =>
-            c.story === story &&
-            names.includes(c.name) &&
-            !/flocked|10 inch|jumbo/i.test(c.version || "")
-        ) || catalog.cards.find((c) => c.story === story);
-      if (card) art.style.backgroundImage = `url("${card.thumb || card.full}")`;
+            c.story === fav.story &&
+            !/flocked|10 inch|jumbo|gitd|chase|metallic|diamond/i.test(
+              `${c.version || ""} ${c.rarity || ""}`
+            )
+        ) || catalog.cards.find((c) => c.story === fav.story);
+      if (card && art) art.style.backgroundImage = `url("${card.thumb || card.full}")`;
+      grid.appendChild(btn);
     }
   }
 
@@ -403,19 +646,22 @@
       applyFilters();
     });
 
-    document.querySelectorAll(".fav-card").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        showTab("collection");
-        const story = btn.getAttribute("data-story") || "";
-        els.search.value = "";
-        els.setFilter.value = "";
-        els.rarityFilter.value = "";
-        els.storyFilter.value = story;
-        if (els.ownFilter) els.ownFilter.value = "";
-        applyFilters();
-        document.getElementById("collection")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
+    els.favGrid?.addEventListener("click", (e) => {
+      const btn = e.target.closest(".fav-card");
+      if (!btn || !els.favGrid.contains(btn)) return;
+      showTab("collection");
+      const story = btn.getAttribute("data-story") || "";
+      els.search.value = "";
+      els.setFilter.value = "";
+      els.rarityFilter.value = "";
+      els.storyFilter.value = story;
+      if (els.ownFilter) els.ownFilter.value = "";
+      applyFilters();
+      document.getElementById("collection")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+    els.universePokemon?.addEventListener("click", () => switchUniverse("pokemon"));
+    els.universeDragonball?.addEventListener("click", () => switchUniverse("dragonball"));
 
     els.grid.addEventListener("click", onGridClick);
     els.ownedGrid?.addEventListener("click", onGridClick);
@@ -612,7 +858,7 @@
     if (els.caughtProgressLabel) {
       els.caughtProgressLabel.textContent =
         total > 0
-          ? `${pct}% caught · ${ownedN.toLocaleString()} / ${total.toLocaleString()}`
+          ? `${pct}% ${universe.progressWord} · ${ownedN.toLocaleString()} / ${total.toLocaleString()}`
           : "Loading catch progress…";
     }
 
@@ -813,8 +1059,8 @@
 
     try {
       const stamp = Date.now();
-      const bakedRes = await fetch(`./data/coming-soon.json?t=${stamp}`, { cache: "no-store" });
-      if (!bakedRes.ok) throw new Error(`coming-soon.json ${bakedRes.status}`);
+      const bakedRes = await fetch(`${universe.comingUrl}?t=${stamp}`, { cache: "no-store" });
+      if (!bakedRes.ok) throw new Error(`${universe.comingUrl} ${bakedRes.status}`);
       comingData = await bakedRes.json();
 
       // Live news pass — official site via CORS-friendly reader when she opens the tab
@@ -1033,7 +1279,7 @@
       ? `${reveals.length} shop sighting${reveals.length === 1 ? "" : "s"} from current listings`
       : previewArts.length
         ? `${previewArts.length} preview image${previewArts.length === 1 ? "" : "s"} — full spoilers will appear here as they’re revealed`
-        : "No early Pop art yet — as soon as new Pokémon are teased, they’ll land here.";
+        : universe.revealsEmpty;
     els.revealsGrid.innerHTML = "";
     showCards.forEach((card, i) => {
       els.revealsGrid.appendChild(makeCardTile(card, i));
@@ -1089,8 +1335,10 @@
     const parts = [];
     if (els.storyFilter.value) parts.push(els.storyFilter.value);
     if (els.setFilter.value) {
-      const set = catalog.sets.find((s) => s.code === els.setFilter.value);
-      parts.push(set?.name || els.setFilter.value);
+      const code = els.setFilter.value;
+      const fromUniverse = (universe.seriesOptions || []).find((s) => s.code === code);
+      const set = catalog.sets.find((s) => s.code === code);
+      parts.push(fromUniverse?.name || set?.name || code);
     }
     if (els.rarityFilter.value) parts.push(els.rarityFilter.value);
     if (els.ownFilter?.value === "owned") parts.push("Owned");
@@ -1100,7 +1348,7 @@
 
     const ownedN = owned.size;
     if (n === total && !parts.length) {
-      els.countLabel.textContent = `${total.toLocaleString()} Pops on the shelves · ${ownedN.toLocaleString()} caught`;
+      els.countLabel.textContent = `${total.toLocaleString()} Pops on the shelves · ${ownedN.toLocaleString()} ${universe.progressWord}`;
     } else {
       els.countLabel.textContent = `${n.toLocaleString()} Pop${n === 1 ? "" : "s"} matched`;
     }
@@ -1110,15 +1358,42 @@
     els.empty.hidden = n !== 0;
   }
 
-  function renderCatalog() {
-    if (!filtered.length) return;
+  function renderFinishGroup(frag, finish, cards, selectedFinish) {
+    if (!cards.length) return;
+    if (selectedFinish && finish !== selectedFinish) return;
+    const block = document.createElement("section");
+    block.className = "finish-block shelf-bay";
+    block.dataset.finish = finish;
 
-    const selectedFinish = els.rarityFilter.value;
+    const head = document.createElement("button");
+    head.type = "button";
+    head.className = "finish-head";
+    head.setAttribute("aria-expanded", "true");
+    head.innerHTML = `
+      <span class="finish-head-copy">
+        <span class="finish-label">${escapeHtml(finish)} <span class="finish-count">${cards.length}</span></span>
+        <span class="finish-note">${escapeHtml(FINISH_BLURBS[finish] || "Special finish")}</span>
+      </span>
+      <span class="finish-chevron" aria-hidden="true"></span>
+    `;
+    head.addEventListener("click", () => {
+      const collapsed = block.classList.toggle("is-collapsed");
+      head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    });
+
+    const grid = document.createElement("div");
+    grid.className = "grid shelf-row";
+    cards.forEach((card, i) => grid.appendChild(makeCardTile(card, i)));
+    block.appendChild(head);
+    block.appendChild(grid);
+    frag.appendChild(block);
+  }
+
+  function groupByFinish(cards) {
     const groups = new Map();
     for (const finish of FINISH_ORDER) groups.set(finish, []);
     const extras = new Map();
-
-    for (const card of filtered) {
+    for (const card of cards) {
       const finish = finishOf(card);
       if (groups.has(finish)) groups.get(finish).push(card);
       else {
@@ -1126,41 +1401,75 @@
         extras.get(finish).push(card);
       }
     }
+    return { groups, extras };
+  }
 
+  function renderCatalog() {
+    if (!filtered.length) return;
+
+    const selectedFinish = els.rarityFilter.value;
     const frag = document.createDocumentFragment();
-    const renderGroup = (finish, cards) => {
+    const nestBySeries = universeId === "dragonball";
+
+    if (!nestBySeries) {
+      const { groups, extras } = groupByFinish(filtered);
+      for (const finish of FINISH_ORDER) renderFinishGroup(frag, finish, groups.get(finish) || [], selectedFinish);
+      for (const [finish, cards] of extras) renderFinishGroup(frag, finish, cards, selectedFinish);
+      els.grid.appendChild(frag);
+      return;
+    }
+
+    const selectedSeries = els.setFilter?.value || "";
+    const seriesOrder = (
+      Array.isArray(universe.seriesOptions) && universe.seriesOptions.length
+        ? universe.seriesOptions
+        : (catalog.sets || []).map((s) => ({ code: s.code, name: s.name }))
+    ).map((s) => s.code);
+    const seriesName = (code, fallbackCard) => {
+      const setMeta = (catalog.sets || []).find((s) => s.code === code);
+      if (setMeta?.name) return setMeta.name;
+      const fromUniverse = (universe.seriesOptions || []).find((s) => s.code === code);
+      if (fromUniverse) return fromUniverse.name;
+      return fallbackCard?.setName || code;
+    };
+    const bySeries = new Map();
+    for (const code of seriesOrder) bySeries.set(code, []);
+    for (const card of filtered) {
+      const code = card.setCode || "Z";
+      if (!bySeries.has(code)) bySeries.set(code, []);
+      bySeries.get(code).push(card);
+    }
+
+    const renderSeriesBucket = (code, cards) => {
       if (!cards.length) return;
-      if (selectedFinish && finish !== selectedFinish) return;
-      const block = document.createElement("section");
-      block.className = "finish-block shelf-bay";
-      block.dataset.finish = finish;
+      if (selectedSeries && code !== selectedSeries) return;
+      const title = seriesName(code, cards[0]);
 
-      const head = document.createElement("button");
-      head.type = "button";
-      head.className = "finish-head";
-      head.setAttribute("aria-expanded", "true");
+      const series = document.createElement("section");
+      series.className = "series-block";
+      series.dataset.series = code;
+
+      const head = document.createElement("div");
+      head.className = "series-head";
       head.innerHTML = `
-        <span class="finish-head-copy">
-          <span class="finish-label">${escapeHtml(finish)} <span class="finish-count">${cards.length}</span></span>
-          <span class="finish-note">${escapeHtml(FINISH_BLURBS[finish] || "Special finish")}</span>
-        </span>
-        <span class="finish-chevron" aria-hidden="true"></span>
+        <h3 class="series-title">${escapeHtml(title)} <span class="series-count">${cards.length}</span></h3>
+        <p class="series-note">Grouped by Funko finish inside this saga.</p>
       `;
-      head.addEventListener("click", () => {
-        const collapsed = block.classList.toggle("is-collapsed");
-        head.setAttribute("aria-expanded", collapsed ? "false" : "true");
-      });
+      series.appendChild(head);
 
-      const grid = document.createElement("div");
-      grid.className = "grid shelf-row";
-      cards.forEach((card, i) => grid.appendChild(makeCardTile(card, i)));
-      block.appendChild(head);
-      block.appendChild(grid);
-      frag.appendChild(block);
+      const body = document.createElement("div");
+      body.className = "series-body";
+      const { groups, extras } = groupByFinish(cards);
+      for (const finish of FINISH_ORDER) renderFinishGroup(body, finish, groups.get(finish) || [], selectedFinish);
+      for (const [finish, finishCards] of extras) renderFinishGroup(body, finish, finishCards, selectedFinish);
+      series.appendChild(body);
+      frag.appendChild(series);
     };
 
-    for (const finish of FINISH_ORDER) renderGroup(finish, groups.get(finish) || []);
-    for (const [finish, cards] of extras) renderGroup(finish, cards);
+    for (const code of seriesOrder) renderSeriesBucket(code, bySeries.get(code) || []);
+    for (const [code, cards] of bySeries) {
+      if (!seriesOrder.includes(code)) renderSeriesBucket(code, cards);
+    }
 
     els.grid.appendChild(frag);
   }
@@ -1175,7 +1484,7 @@
     const art = card.full || card.thumb;
     els.modalImg.src = art;
     els.modalImg.alt = card.fullName;
-    els.modalStory.textContent = card.story || "Pokémon";
+    els.modalStory.textContent = card.story || universe.modalStoryFallback;
     els.modalName.textContent = card.name || card.fullName;
     els.modalVersion.textContent = card.version ? card.version : card.fullName;
     els.modalRarity.textContent = finishOf(card);
