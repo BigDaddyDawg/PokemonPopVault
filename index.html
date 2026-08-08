@@ -3,20 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Poké Pop Vault — a gallery of every Pokémon Funko Pop! ever released." />
-  <meta name="theme-color" content="#0a1628" />
+  <meta name="description" content="Poké Pop Vault — a personal gallery of every Pokémon Funko Pop! ever released." />
+  <meta name="theme-color" content="#ee1515" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Pop Vault" />
   <title>Poké Pop Vault · Pokémon Funko Gallery</title>
-  <link rel="manifest" href="manifest.webmanifest?v=5" />
-  <link rel="icon" href="icon.svg?v=5" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=5" />
+  <link rel="manifest" href="manifest.webmanifest?v=7" />
+  <link rel="icon" href="icon.svg?v=7" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&family=Russo+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Russo+One&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=9" />
+  <script>
+    try {
+      if (
+        sessionStorage.getItem("ppv_intro_seen") === "1" ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        document.documentElement.classList.add("skip-intro");
+      } else {
+        document.documentElement.classList.add("play-intro");
+      }
+    } catch (_) {}
+  </script>
 </head>
 <body>
   <div class="sky" aria-hidden="true">
@@ -26,18 +38,60 @@
     <div class="vignette"></div>
   </div>
 
-  <header class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow">A private vault · for his collection</p>
-      <h1 class="brand">Poké Pop Vault</h1>
-      <p class="tagline">Every Pokémon Funko Pop!, waiting on the shelf.</p>
-      <a class="cta" href="#collection">Open the vault</a>
+  <div class="intro" id="intro">
+    <button type="button" class="intro-skip" id="introSkip">Skip</button>
+    <div class="intro-stage" aria-hidden="true">
+      <div class="intro-flash"></div>
+      <div class="thunder thunder-a"></div>
+      <div class="thunder thunder-b"></div>
+      <div class="thunder thunder-c"></div>
+      <div class="spark sparka"></div>
+      <div class="spark sparkb"></div>
+      <div class="spark sparkc"></div>
+      <div class="pop-box">
+        <div class="pop-lid"></div>
+        <div class="pop-body">
+          <div class="pop-window">
+            <span class="pop-silhouette"></span>
+          </div>
+          <div class="pop-label">
+            <span class="pop-logo">POP!</span>
+            <span class="pop-line">POKÉMON</span>
+          </div>
+        </div>
+      </div>
+      <div class="intro-copy">
+        <p class="intro-brand">Poké Pop Vault</p>
+        <p class="intro-line">Open the collection.</p>
+      </div>
     </div>
-    <div class="hero-glow" aria-hidden="true"></div>
+  </div>
+
+  <header class="topbar" id="top">
+    <div class="topbar-inner">
+      <div class="brand-block">
+        <h1 class="brand">Poké Pop Vault</h1>
+        <p class="tagline">Every Pokémon Funko Pop! — your shelf, your story.</p>
+      </div>
+      <div class="vault-stats" id="vaultStats" aria-live="polite">
+        <div class="stat">
+          <span class="stat-value" id="statTotal">—</span>
+          <span class="stat-label">In vault</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statOwned">0</span>
+          <span class="stat-label">Owned</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statWish">0</span>
+          <span class="stat-label">Wishlist</span>
+        </div>
+      </div>
+    </div>
   </header>
 
   <nav class="tabs" aria-label="Gallery sections">
-    <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">Catalogue</button>
+    <button type="button" class="tab is-active" data-tab="collection" id="tabCollection">Library</button>
     <button type="button" class="tab" data-tab="owned" id="tabOwned">Owned <span class="tab-count" id="ownedTabCount" hidden>0</span></button>
     <button type="button" class="tab" data-tab="wishlist" id="tabWishlist">Wishlist <span class="tab-count" id="wishTabCount" hidden>0</span></button>
     <button type="button" class="tab" data-tab="coming" id="tabComing">Coming Soon</button>
@@ -45,29 +99,31 @@
 
   <div id="panelCollection">
   <section class="favorites" aria-label="Favorite Pokémon">
-    <div class="section-head">
-      <h2>Caught on the radar</h2>
-      <p>Jump straight to the species that matter most.</p>
+    <div class="section-head section-head-row">
+      <div>
+        <h2>Quick catch</h2>
+        <p>Jump to the legends on your radar.</p>
+      </div>
     </div>
     <div class="fav-grid" id="favGrid">
       <button class="fav-card fav-pika" type="button" data-story="Pikachu">
         <span class="fav-art" id="favArtPika"></span>
         <span class="fav-copy">
-          <span class="fav-kicker">Gotta catch…</span>
+          <span class="fav-kicker">Electric</span>
           <span class="fav-title">Pikachu</span>
         </span>
       </button>
-      <button class="fav-card fav-eevee" type="button" data-story="Eevee">
-        <span class="fav-art" id="favArtEevee"></span>
+      <button class="fav-card fav-lucario" type="button" data-story="Lucario">
+        <span class="fav-art" id="favArtLucario"></span>
         <span class="fav-copy">
-          <span class="fav-kicker">Eeveelutions</span>
-          <span class="fav-title">Eevee</span>
+          <span class="fav-kicker">Fighting / Steel</span>
+          <span class="fav-title">Lucario</span>
         </span>
       </button>
       <button class="fav-card fav-char" type="button" data-story="Charizard">
         <span class="fav-art" id="favArtChar"></span>
         <span class="fav-copy">
-          <span class="fav-kicker">Flame on</span>
+          <span class="fav-kicker">Fire / Flying</span>
           <span class="fav-title">Charizard</span>
         </span>
       </button>
@@ -75,15 +131,17 @@
   </section>
 
   <main id="collection" class="gallery">
-    <div class="section-head">
-      <h2>The Full Collection</h2>
-      <p id="countLabel">Loading every released Pop!…</p>
+    <div class="section-head section-head-row">
+      <div>
+        <h2>Display case</h2>
+        <p id="countLabel">Loading every released Pop!…</p>
+      </div>
     </div>
 
     <div class="filters" id="filters">
       <label class="search-wrap">
         <span class="sr-only">Search pops</span>
-        <input id="search" type="search" placeholder="Search by name or variant…" autocomplete="off" />
+        <input id="search" type="search" placeholder="Search name, number, variant…" autocomplete="off" />
       </label>
       <label>
         <span>Series</span>
@@ -133,7 +191,7 @@
         <input id="ownedSearch" type="search" placeholder="Search owned Pops…" autocomplete="off" />
       </label>
     </div>
-    <div class="grid grid-compact" id="ownedGrid" aria-live="polite"></div>
+    <div class="grid shelf-row" id="ownedGrid" aria-live="polite"></div>
     <p class="empty" id="ownedEmpty" hidden>No owned Pops yet. Tap the checkmark on any Pop to mark it owned.</p>
   </section>
 
@@ -148,7 +206,7 @@
         <input id="wishSearch" type="search" placeholder="Search wishlist…" autocomplete="off" />
       </label>
     </div>
-    <div class="grid grid-compact" id="wishGrid" aria-live="polite"></div>
+    <div class="grid shelf-row" id="wishGrid" aria-live="polite"></div>
     <p class="empty" id="wishEmpty" hidden>Wishlist is empty. Tap the heart on any Pop to save it here.</p>
   </section>
 
@@ -172,13 +230,13 @@
     <div class="coming-block">
       <h3 class="coming-label">Newly spotted Pops</h3>
       <p class="coming-note" id="revealsNote">As new Pokémon Pops hit the shop, they’ll appear here.</p>
-      <div class="grid" id="revealsGrid"></div>
+      <div class="grid shelf-row" id="revealsGrid"></div>
     </div>
   </section>
 
   <footer class="site-footer">
     <p>Poké Pop Vault · fan gallery · data via PriceCharting, Funko.com &amp; community checklists</p>
-    <p class="fine">Pokémon and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Game Freak, or Funko.</p>
+    <p class="fine">Market values are approximate GBP from recent PriceCharting sales (boxed), converted from USD. Pokémon and Funko Pop! are trademarks of their respective owners. Not affiliated with Nintendo, The Pokémon Company, Game Freak, or Funko.</p>
   </footer>
 
   <dialog class="modal" id="cardModal">
@@ -186,7 +244,6 @@
       <button type="button" class="modal-close" id="modalClose" aria-label="Close">×</button>
       <div class="modal-art">
         <img id="modalImg" alt="" />
-        <div class="modal-sparkle" aria-hidden="true"></div>
       </div>
       <div class="modal-meta">
         <p class="modal-story" id="modalStory"></p>
@@ -209,6 +266,10 @@
             <dt>Exclusive</dt>
             <dd id="modalColor"></dd>
           </div>
+          <div>
+            <dt>Market value</dt>
+            <dd id="modalPrice">—</dd>
+          </div>
         </dl>
         <div class="modal-actions">
           <button type="button" class="wish-toggle" id="modalOwn" aria-pressed="false">Mark owned</button>
@@ -220,13 +281,13 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="family-vault-config.js"></script>
-  <script src="family-list-sync.js?v=shared2"></script>
-  <script src="app.js?v=shared2" defer></script>
+  <script src="family-list-sync.js?v=shared3"></script>
+  <script src="app.js?v=ui9" defer></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("service-worker.js?v=5")
+          .register("service-worker.js?v=7")
           .then((reg) => {
             if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
             reg.update().catch(() => {});

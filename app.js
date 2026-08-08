@@ -26,7 +26,7 @@
   };
   const FAV_PICKS = {
     Pikachu: ["Pikachu"],
-    Eevee: ["Eevee"],
+    Lucario: ["Lucario"],
     Charizard: ["Charizard"],
   };
   const HEART_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20.2s-6.7-4.2-9.1-8.1C1.2 9.4 2.1 6.4 5 5.4c1.8-.6 3.7.1 4.8 1.5C11 5.5 12.9 4.8 14.7 5.4c2.9 1 3.8 4 2.1 6.7-2.4 3.9-9.1 8.1-9.1 8.1z"/></svg>`;
@@ -54,6 +54,7 @@
     modalSet: document.getElementById("modalSet"),
     modalType: document.getElementById("modalType"),
     modalColor: document.getElementById("modalColor"),
+    modalPrice: document.getElementById("modalPrice"),
     modalWish: document.getElementById("modalWish"),
     modalOwn: document.getElementById("modalOwn"),
     panelCollection: document.getElementById("panelCollection"),
@@ -80,6 +81,11 @@
     newsList: document.getElementById("newsList"),
     revealsGrid: document.getElementById("revealsGrid"),
     revealsNote: document.getElementById("revealsNote"),
+    intro: document.getElementById("intro"),
+    introSkip: document.getElementById("introSkip"),
+    statTotal: document.getElementById("statTotal"),
+    statOwned: document.getElementById("statOwned"),
+    statWish: document.getElementById("statWish"),
   };
 
   /** @type {{cards: any[], sets: any[], rarities: string[], stories: string[], count?: number}} */
@@ -108,6 +114,7 @@
   let ownedSync = null;
 
   initStars();
+  playIntro();
   loadWishlist();
   loadOwned();
   boot();
@@ -128,6 +135,36 @@
       els.countLabel.textContent = "The vault wouldn’t open. Try refreshing.";
       console.error(err);
     }
+  }
+
+  function playIntro() {
+    const root = els.intro;
+    if (!root) return;
+    if (document.documentElement.classList.contains("skip-intro")) {
+      root.hidden = true;
+      return;
+    }
+
+    document.body.classList.add("is-introing");
+    let finished = false;
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      try {
+        sessionStorage.setItem("ppv_intro_seen", "1");
+      } catch (_) {}
+      root.classList.add("is-done");
+      document.body.classList.remove("is-introing");
+      document.documentElement.classList.remove("play-intro");
+      window.setTimeout(() => {
+        root.hidden = true;
+        document.documentElement.classList.add("skip-intro");
+      }, 600);
+    };
+
+    els.introSkip?.addEventListener("click", finish, { once: true });
+    window.setTimeout(finish, 4200);
   }
 
   async function initFamilyVault() {
@@ -268,7 +305,7 @@
   function paintFavorites() {
     const map = {
       Pikachu: "favArtPika",
-      Eevee: "favArtEevee",
+      Lucario: "favArtLucario",
       Charizard: "favArtChar",
     };
     for (const [story, id] of Object.entries(map)) {
@@ -282,7 +319,7 @@
             names.includes(c.name) &&
             !/flocked|10 inch|jumbo/i.test(c.version || "")
         ) || catalog.cards.find((c) => c.story === story);
-      if (card) art.style.backgroundImage = `url("${card.full || card.thumb}")`;
+      if (card) art.style.backgroundImage = `url("${card.thumb || card.full}")`;
     }
   }
 
@@ -433,6 +470,9 @@
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       btn.setAttribute("aria-label", on ? "Remove from wishlist" : "Add to wishlist");
     });
+    document.querySelectorAll(`.card-wrap[data-card-id="${safe}"]`).forEach((wrap) => {
+      wrap.classList.toggle("is-wished", on);
+    });
   }
 
   function syncOwnButtons(id) {
@@ -468,6 +508,7 @@
   function updateTrackerChrome() {
     const wishN = wishlist.size;
     const ownedN = owned.size;
+    const total = catalog.count || catalog.cards.length || 0;
     if (els.wishTabCount) {
       els.wishTabCount.hidden = wishN === 0;
       els.wishTabCount.textContent = String(wishN);
@@ -476,6 +517,9 @@
       els.ownedTabCount.hidden = ownedN === 0;
       els.ownedTabCount.textContent = String(ownedN);
     }
+    if (els.statTotal) els.statTotal.textContent = total ? total.toLocaleString() : "—";
+    if (els.statOwned) els.statOwned.textContent = ownedN.toLocaleString();
+    if (els.statWish) els.statWish.textContent = wishN.toLocaleString();
     if (els.wishCountLabel) {
       els.wishCountLabel.textContent =
         wishN === 0
@@ -483,7 +527,6 @@
           : `${wishN.toLocaleString()} Pop${wishN === 1 ? "" : "s"} on the wishlist.`;
     }
     if (els.ownedCountLabel) {
-      const total = catalog.count || catalog.cards.length || 0;
       els.ownedCountLabel.textContent =
         ownedN === 0
           ? "Shared family shelf — anyone can tick these off."
@@ -522,6 +565,26 @@
     });
   }
 
+  function formatGbp(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return null;
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: n >= 100 ? 0 : 2,
+    }).format(n);
+  }
+
+  function priceOf(card) {
+    if (card?.priceGbp != null) return formatGbp(card.priceGbp);
+    if (card?.priceUsd != null) {
+      // Fallback display if only USD was stored.
+      const gbp = Number(card.priceUsd) * 0.79;
+      return formatGbp(gbp);
+    }
+    return null;
+  }
+
   function makeCardTile(card, i = 0) {
     const wrap = document.createElement("div");
     wrap.className = "card-wrap";
@@ -529,18 +592,22 @@
 
     const finish = finishOf(card);
     const num = popNumber(card);
+    const price = priceOf(card);
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "card";
     btn.dataset.id = String(card.id);
-    btn.setAttribute("aria-label", `${card.fullName}, ${finish}`);
+    btn.setAttribute("aria-label", `${card.fullName}, ${finish}${price ? `, ${price}` : ""}`);
     btn.innerHTML = `
-      <img src="${escapeAttr(card.thumb || card.full)}" alt="" loading="lazy" decoding="async" width="160" height="200" />
+      <span class="card-figure">
+        <img src="${escapeAttr(card.thumb || card.full)}" alt="" loading="lazy" decoding="async" width="140" height="140" />
+      </span>
+      <span class="shelf-ledge" aria-hidden="true"></span>
       <span class="card-caption">
         <span class="card-num">${num != null ? `#${num}` : "—"}</span>
         <span class="card-name">${escapeHtml(card.name || card.fullName || "")}</span>
+        <span class="card-price${price ? "" : " is-empty"}">${price ? escapeHtml(price) : "—"}</span>
       </span>
-      <span class="card-badge">${escapeHtml(finish)}</span>
     `;
     wrap.appendChild(btn);
 
@@ -939,9 +1006,9 @@
 
     const ownedN = owned.size;
     if (n === total && !parts.length) {
-      els.countLabel.textContent = `${total.toLocaleString()} Pops · ${ownedN.toLocaleString()} owned · sorted by #`;
+      els.countLabel.textContent = `${total.toLocaleString()} Pops on the shelves · ${ownedN.toLocaleString()} caught`;
     } else {
-      els.countLabel.textContent = `${n.toLocaleString()} Pop${n === 1 ? "" : "s"} found · sorted by #`;
+      els.countLabel.textContent = `${n.toLocaleString()} Pop${n === 1 ? "" : "s"} matched`;
     }
 
     els.activePills.hidden = parts.length === 0;
@@ -971,7 +1038,7 @@
       if (!cards.length) return;
       if (selectedFinish && finish !== selectedFinish) return;
       const block = document.createElement("section");
-      block.className = "finish-block";
+      block.className = "finish-block shelf-bay";
       block.innerHTML = `
         <div class="finish-head">
           <h3 class="finish-label">${escapeHtml(finish)} <span class="finish-count">${cards.length}</span></h3>
@@ -979,7 +1046,7 @@
         </div>
       `;
       const grid = document.createElement("div");
-      grid.className = "grid grid-compact";
+      grid.className = "grid shelf-row";
       cards.forEach((card, i) => grid.appendChild(makeCardTile(card, i)));
       block.appendChild(grid);
       frag.appendChild(block);
@@ -997,7 +1064,9 @@
 
   function openModal(card) {
     modalCardId = String(card.id);
-    els.modalImg.src = card.full || card.thumb;
+    // Prefer mid-size art when possible; fall back to full / thumb.
+    const art = card.full || card.thumb;
+    els.modalImg.src = art;
     els.modalImg.alt = card.fullName;
     els.modalStory.textContent = card.story || "Pokémon";
     els.modalName.textContent = card.name || card.fullName;
@@ -1006,6 +1075,11 @@
     els.modalSet.textContent = card.setName || card.setCode || "—";
     els.modalType.textContent = card.type || "—";
     els.modalColor.textContent = card.color || "—";
+    if (els.modalPrice) {
+      const price = priceOf(card);
+      els.modalPrice.textContent = price || "No recent sales";
+      els.modalPrice.classList.toggle("is-empty", !price);
+    }
     const trackable = isWishable(card.id);
     if (els.modalWish) {
       els.modalWish.hidden = !trackable;

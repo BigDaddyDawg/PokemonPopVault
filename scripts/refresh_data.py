@@ -158,6 +158,18 @@ def set_name_for(code: str) -> str:
     }.get(code, "Pop! Pokémon")
 
 
+def parse_money(text: str) -> float | None:
+    if not text:
+        return None
+    m = re.search(r"([0-9]+(?:\.[0-9]+)?)", text.replace(",", ""))
+    if not m:
+        return None
+    try:
+        return round(float(m.group(1)), 2)
+    except ValueError:
+        return None
+
+
 def parse_pc_rows(html: str) -> list[dict]:
     rows = []
     for m in re.finditer(
@@ -186,6 +198,21 @@ def parse_pc_rows(html: str) -> list[dict]:
         if thumb:
             full = re.sub(r"/\d+\.jpg", "/1600.jpg", thumb)
             thumb = re.sub(r"/\d+\.jpg", "/240.jpg", thumb)
+
+        def col_price(cls: str) -> float | None:
+            cm = re.search(
+                rf'class="[^"]*\b{re.escape(cls)}\b[^"]*"[^>]*>.*?<span class="js-price">([^<]*)</span>',
+                block,
+                re.I | re.S,
+            )
+            return parse_money(cm.group(1)) if cm else None
+
+        used = col_price("funko_used_price")
+        cib = col_price("cib_price")
+        new = col_price("funko_new_price")
+        # Prefer boxed (CIB), then new, then loose/used.
+        market_usd = next((p for p in (cib, new, used) if p is not None), None)
+
         rows.append(
             {
                 "pcId": m.group("id"),
@@ -195,9 +222,32 @@ def parse_pc_rows(html: str) -> list[dict]:
                 "thumb": thumb,
                 "full": full,
                 "url": "https://www.pricecharting.com" + href.group(1),
+                "priceUsd": market_usd,
+                "priceUsdUsed": used,
+                "priceUsdCib": cib,
+                "priceUsdNew": new,
             }
         )
     return rows
+
+
+def fetch_usd_gbp_rate() -> float:
+    """Live USD→GBP rate with a safe fallback."""
+    try:
+        raw = fetch("https://api.frankfurter.app/latest?from=USD&to=GBP")
+        data = json.loads(raw)
+        rate = float(data["rates"]["GBP"])
+        if 0.5 < rate < 1.5:
+            return rate
+    except Exception as exc:  # noqa: BLE001
+        print(f"  FX rate fallback ({exc})")
+    return 0.79
+
+
+def usd_to_gbp(usd: float | None, rate: float) -> float | None:
+    if usd is None:
+        return None
+    return round(usd * rate, 2)
 
 
 def scrape_pricecharting() -> list[dict]:
@@ -468,6 +518,8 @@ def build_cards(pc_rows: list[dict], funko_rows: list[dict]) -> list[dict]:
                 "number": number,
                 "source": "pricecharting",
                 "url": row["url"],
+                "priceUsd": row.get("priceUsd"),
+                "priceGbp": row.get("priceGbp"),
             }
         )
 
@@ -594,6 +646,10 @@ def dedupe_cards(cards: list[dict]) -> list[dict]:
 def main() -> None:
     DATA.mkdir(exist_ok=True)
     pc_rows = scrape_pricecharting()
+    rate = fetch_usd_gbp_rate()
+    print(f"USD->GBP rate: {rate}")
+    for row in pc_rows:
+        row["priceGbp"] = usd_to_gbp(row.get("priceUsd"), rate)
     funko_rows = scrape_funko()
     cards = build_cards(pc_rows, funko_rows)
 
