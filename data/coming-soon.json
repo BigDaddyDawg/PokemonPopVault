@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-12T15:53:11Z",
+  "generated": "2026-08-16T15:14:33Z",
   "sources": {
     "catalog": "PriceCharting + curated Pop! Pokémon checklist",
     "news": "https://funko.com/gb/funko-blog/",
@@ -18,9 +18,9 @@
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf6b613fd/images/funko/upload/92306_BittyPop_Display_PokeBall_Box_Edit_V2_REV10726_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw35c7fae7/images/funko/upload/1/93995_Pokemon_Charmeleon_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw7b89a3f6/images/funko/upload/1/91988_Pokemon_Ivysaur_POP_JUMBO_GLAM_1-T-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw80b8946b/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfadeb346/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwebdd6e54/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800"
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb2f467fa/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM_1-GS-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw10814bfe/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM_1-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw91a29e2a/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-1-T-WEB.png?sw=800&sh=800"
       ],
       "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf6b613fd/images/funko/upload/92306_BittyPop_Display_PokeBall_Box_Edit_V2_REV10726_GLAM-1-WEB.png?sw=800&sh=800",
       "revealedCount": 6,
@@ -38,9 +38,9 @@
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf6b613fd/images/funko/upload/92306_BittyPop_Display_PokeBall_Box_Edit_V2_REV10726_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw35c7fae7/images/funko/upload/1/93995_Pokemon_Charmeleon_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw7b89a3f6/images/funko/upload/1/91988_Pokemon_Ivysaur_POP_JUMBO_GLAM_1-T-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw80b8946b/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfadeb346/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwebdd6e54/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800"
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb2f467fa/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM_1-GS-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw10814bfe/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM_1-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw91a29e2a/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-1-T-WEB.png?sw=800&sh=800"
       ],
       "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf6b613fd/images/funko/upload/92306_BittyPop_Display_PokeBall_Box_Edit_V2_REV10726_GLAM-1-WEB.png?sw=800&sh=800",
       "revealedCount": 6,
@@ -107,8 +107,8 @@
       "story": "Espeon",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw80b8946b/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw80b8946b/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb2f467fa/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM_1-GS-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb2f467fa/images/funko/upload/1/91963_Pokemon_Espeon(SoftColor)_POP_GLAM_1-GS-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-espeon-soft-color/91963.html"
     },
@@ -123,8 +123,8 @@
       "story": "Goomy",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfadeb346/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfadeb346/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw10814bfe/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM_1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw10814bfe/images/funko/upload/1/91663PKG_Pokemon_Goomy_POP_GLAM_1-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-goomy/91663.html"
     },
@@ -139,8 +139,8 @@
       "story": "Jumbo Ceruledge",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwebdd6e54/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwebdd6e54/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw91a29e2a/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-1-T-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw91a29e2a/images/funko/upload/1/91701_Pokemon_Ceruledge_POP_JUMBO_GLAM-1-T-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-jumbo-ceruledge/91701.html"
     },
@@ -155,8 +155,8 @@
       "story": "Charmeleon",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw7da52064/images/funko/upload/1/92414_Pokemon_Charmeleon_POP_GLAM_1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw7da52064/images/funko/upload/1/92414_Pokemon_Charmeleon_POP_GLAM_1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfc53827f/images/funko/upload/1/92414_Pokemon_Charmeleon_POP_GLAM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfc53827f/images/funko/upload/1/92414_Pokemon_Charmeleon_POP_GLAM-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-charmeleon/92414.html"
     },
@@ -171,8 +171,8 @@
       "story": "Zoroark",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw1ff98e2d/images/funko/upload/1/91665_Pokemon_Zoroark_POP_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw1ff98e2d/images/funko/upload/1/91665_Pokemon_Zoroark_POP_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw26d7a676/images/funko/upload/1/91665_Pokemon_Zoroark_POP_GLAM_1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw26d7a676/images/funko/upload/1/91665_Pokemon_Zoroark_POP_GLAM_1-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-zoroark/91665.html"
     },
@@ -203,8 +203,8 @@
       "story": "Jumbo Slowpoke",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw723d97a8/images/funko/upload/1/87193_Pokemon_Slowpoke_POP_JUMBO_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw723d97a8/images/funko/upload/1/87193_Pokemon_Slowpoke_POP_JUMBO_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw46fb8ad2/images/funko/upload/1/87193_Pokemon_Slowpoke_POP_JUMBO_GLAM-1-T-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw46fb8ad2/images/funko/upload/1/87193_Pokemon_Slowpoke_POP_JUMBO_GLAM-1-T-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-jumbo-slowpoke/87193.html"
     },
@@ -267,8 +267,8 @@
       "story": "Aipom",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw8c646352/images/funko/upload/1/69136_Pokemon_Aipom_FL__EMEA_POP_GLAM_1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw8c646352/images/funko/upload/1/69136_Pokemon_Aipom_FL__EMEA_POP_GLAM_1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwa4a06cbc/images/funko/upload/1/69136_Pokemon_Aipom_FL__EMEA_POP_GLAM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwa4a06cbc/images/funko/upload/1/69136_Pokemon_Aipom_FL__EMEA_POP_GLAM-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-aipom/69136.html"
     },
@@ -283,8 +283,8 @@
       "story": "Grookey",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe96618db/images/funko/upload/1/76713_Pokemon_Grookey(FL)_EMEA_POP_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe96618db/images/funko/upload/1/76713_Pokemon_Grookey(FL)_EMEA_POP_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw5a56b54f/images/funko/upload/1/76713_Pokemon_Grookey(FL)_EMEA_POP_GLAM_1-FNUK-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw5a56b54f/images/funko/upload/1/76713_Pokemon_Grookey(FL)_EMEA_POP_GLAM_1-FNUK-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-grookey/76713.html"
     },
@@ -299,8 +299,8 @@
       "story": "Charmander",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwcc145069/images/funko/upload/86066_Pokemon_Charmander(SoftColor)_POP_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwcc145069/images/funko/upload/86066_Pokemon_Charmander(SoftColor)_POP_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw27d0c303/images/funko/upload/86066_Pokemon_Charmander(SoftColor)_POP_GLAM_1-AM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw27d0c303/images/funko/upload/86066_Pokemon_Charmander(SoftColor)_POP_GLAM_1-AM-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-charmander-soft-color/86066.html"
     },
@@ -331,8 +331,8 @@
       "story": "Bulbasaur",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw1e4fd408/images/funko/upload/86064_Pokemon_Bulbasaur(Pastel)_POP_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw1e4fd408/images/funko/upload/86064_Pokemon_Bulbasaur(Pastel)_POP_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf779e5e1/images/funko/upload/86064_Pokemon_Bulbasaur(Pastel)_POP_GLAM_1_AM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf779e5e1/images/funko/upload/86064_Pokemon_Bulbasaur(Pastel)_POP_GLAM_1_AM-WEB.png?sw=800&sh=800",
       "isExternalReveal": false,
       "url": "https://funko.com/gb/pop-bulbasaur-soft-color/86064.html"
     }
