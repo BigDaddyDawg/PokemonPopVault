@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-16T18:35:27Z",
+  "generated": "2026-09-20T17:50:12Z",
   "sources": {
     "catalog": "PriceCharting + curated Pop! Pokémon checklist",
     "news": "https://funko.com/gb/funko-blog/",
@@ -15,14 +15,14 @@
       "blurb": "Jumbo Suicune, Entei, and Raikou have been hitting conventions and retailer exclusives — watch for wider restocks.",
       "productUrl": "https://funko.com/gb/search?q=pokemon",
       "gallery": [
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw09d47b25/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc775685b/images/funko/upload/1/92307-POKEMON-COUNTDOWN-CALENDAR_GLAM-2-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw2a05964b/images/funko/upload/1/92412_Pokemon_S24_Wartortle_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf837d1e1/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw31604c7a/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf6b613fd/images/funko/upload/92306_BittyPop_Display_PokeBall_Box_Edit_V2_REV10726_GLAM-1-WEB.png?sw=800&sh=800"
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd2893e35/images/funko/upload/1/92412_Pokemon_S24_Wartortle_POP_GLAM-1-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw05d76c20/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd3ce45d5/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-WEB.png?sw=800&sh=800"
       ],
-      "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw09d47b25/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+      "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
       "revealedCount": 6,
       "hasAllCards": false
     },
@@ -35,14 +35,14 @@
       "blurb": "Newer species like Ceruledge, Fidough, Fuecoco, and Quaxly continue to expand the Pop! Pokémon shelf.",
       "productUrl": "https://funko.com/gb/search?q=pokemon+pop",
       "gallery": [
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw09d47b25/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc775685b/images/funko/upload/1/92307-POKEMON-COUNTDOWN-CALENDAR_GLAM-2-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw2a05964b/images/funko/upload/1/92412_Pokemon_S24_Wartortle_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf837d1e1/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw31604c7a/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf6b613fd/images/funko/upload/92306_BittyPop_Display_PokeBall_Box_Edit_V2_REV10726_GLAM-1-WEB.png?sw=800&sh=800"
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd2893e35/images/funko/upload/1/92412_Pokemon_S24_Wartortle_POP_GLAM-1-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw05d76c20/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd3ce45d5/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-WEB.png?sw=800&sh=800"
       ],
-      "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw09d47b25/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+      "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
       "revealedCount": 6,
       "hasAllCards": false
     }
@@ -75,8 +75,8 @@
       "story": "Jumbo Wartortle",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw18baee6b/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw18baee6b/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw9e3689a8/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw9e3689a8/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-1-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-jumbo-wartortle/94775.html"
     },
@@ -91,8 +91,8 @@
       "story": "Premium Blastoise",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw74b80379/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw74b80379/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwdb290d29/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwdb290d29/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-premium-blastoise/92417.html"
     },
@@ -107,8 +107,8 @@
       "story": "Morpeko",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwea1be96a/images/funko/upload/1/92416_Pokemon_S25_Morpeko(Hangry)_POP_GLAM01-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwea1be96a/images/funko/upload/1/92416_Pokemon_S25_Morpeko(Hangry)_POP_GLAM01-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw67fa5e6e/images/funko/upload/1/92416_Pokemon_S25_Morpeko(Hangry)_POP_GLAM-1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw67fa5e6e/images/funko/upload/1/92416_Pokemon_S25_Morpeko(Hangry)_POP_GLAM-1-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-morpeko-hangry-mode/92416.html"
     },
@@ -123,8 +123,8 @@
       "story": "Morpeko",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc508a2a3/images/funko/upload/1/92415_Pokemon_S25_Morpeko(FullBelly)_POP_GLAM-1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc508a2a3/images/funko/upload/1/92415_Pokemon_S25_Morpeko(FullBelly)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwac2e75ea/images/funko/upload/1/92415_Pokemon_S25_Morpeko(FullBelly)_POP_GLAM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwac2e75ea/images/funko/upload/1/92415_Pokemon_S25_Morpeko(FullBelly)_POP_GLAM-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-morpeko-full-belly/92415.html"
     },
@@ -139,8 +139,8 @@
       "story": "Armarouge",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw50a67a2f/images/funko/upload/1/95845_Pokemon_S25_Armarouge_POP_GLAM-1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw50a67a2f/images/funko/upload/1/95845_Pokemon_S25_Armarouge_POP_GLAM-1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb3890668/images/funko/upload/1/95845_Pokemon_S25_Armarouge_POP_GLAM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwb3890668/images/funko/upload/1/95845_Pokemon_S25_Armarouge_POP_GLAM-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-armarouge/95845.html"
     },
@@ -159,22 +159,6 @@
       "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw63e9058c/images/funko/upload/1/97594_BPDISPLAY_BUNDLE_POKEMON_PKG_GLAM-1-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/bitty-pop-display-poke-ball-display-shelf/97594.html"
-    },
-    {
-      "id": "funko-95217",
-      "fullName": "Pop! Jumbo Pikachu",
-      "name": "Jumbo Pikachu",
-      "version": "Shop listing",
-      "rarity": "Coming Soon",
-      "setCode": "SOON",
-      "setName": "Coming Soon",
-      "story": "Jumbo Pikachu",
-      "type": "Pop!",
-      "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
-      "isExternalReveal": true,
-      "url": "https://funko.com/gb/pop-jumbo-pikachu/95217.html"
     }
   ],
   "news": [
