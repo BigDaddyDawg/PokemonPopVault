@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T19:56:58Z",
+  "generated": "2026-09-23T18:45:30Z",
   "sources": {
     "catalog": "PriceCharting + curated Pop! Pokémon checklist",
     "news": "https://funko.com/gb/funko-blog/",
@@ -16,11 +16,11 @@
       "productUrl": "https://funko.com/gb/search?q=pokemon",
       "gallery": [
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw09d47b25/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwcef5fa10/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwec2e4169/images/funko/upload/1/92307-POKEMON-COUNTDOWN-CALENDAR_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd2893e35/images/funko/upload/1/92412_Pokemon_S24_Wartortle_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf837d1e1/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw31604c7a/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-1-WEB.png?sw=800&sh=800"
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd3ce45d5/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-WEB.png?sw=800&sh=800"
       ],
       "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
       "revealedCount": 6,
@@ -36,11 +36,11 @@
       "productUrl": "https://funko.com/gb/search?q=pokemon+pop",
       "gallery": [
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw09d47b25/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-1-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwcef5fa10/images/funko/upload/1/94112_Pokemon_Dragonite(SoftColor)_POP_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwec2e4169/images/funko/upload/1/92307-POKEMON-COUNTDOWN-CALENDAR_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd2893e35/images/funko/upload/1/92412_Pokemon_S24_Wartortle_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf837d1e1/images/funko/upload/1/92411_Pokemon_S24_Lycanroc(Midnight)_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw31604c7a/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-1-WEB.png?sw=800&sh=800"
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwd3ce45d5/images/funko/upload/1/92410_Pokemon_S24_Lycanroc(Midday)_POP_GLAM-WEB.png?sw=800&sh=800"
       ],
       "heroImage": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe0eed78f/images/funko/upload/1/95217_Pokemon_S25_Pikachu(Sitting)_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
       "revealedCount": 6,
@@ -75,8 +75,8 @@
       "story": "Jumbo Wartortle",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw9e3689a8/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw9e3689a8/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw18baee6b/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw18baee6b/images/funko/upload/1/94775_Pokemon_S25_Wartortle_POP_JUMBO_WIDE_GLAM-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-jumbo-wartortle/94775.html"
     },
@@ -91,8 +91,8 @@
       "story": "Premium Blastoise",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwdb290d29/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwdb290d29/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw74b80379/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-1-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw74b80379/images/funko/upload/1/92417_Pokemon_S25_Blastoise_POP-PREMIUM_GLAM-1-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/pop-premium-blastoise/92417.html"
     },
