@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07T20:22:13Z",
+  "generated": "2026-10-11T19:17:01Z",
   "sources": {
     "catalog": "PriceCharting Funko POP Animation + Funko.com Dragon Ball search",
     "news": "https://funko.com/gb/funko-blog/",
@@ -16,9 +16,9 @@
       "productUrl": "https://funko.com/gb/search?q=dragon+ball",
       "gallery": [
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwefcc2c8e/images/funko/upload/1/93328_DBZ_S12_VegetaRefresh_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw562fa201/images/funko/upload/1/93326_DBZ_S12_GokuRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw1d503cf3/images/funko/upload/1/93326_DBZ_S12_GokuRefresh_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw4bdc2afc/images/funko/upload/1/93324_DBZ_S12_FriezaRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw6a929373/images/funko/upload/1/93325_DBZ_S12_GohanRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe63bf79f/images/funko/upload/1/93325_DBZ_S12_GohanRefresh_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf90ac9d3/images/funko/upload/1/93327_DBZ_S12_KrillinRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe6d21b3a/images/funko/upload/1/94746a_POPAnim_DBS_GokuRed_Render_frontview_glam-WEB.png?sw=800&sh=800"
       ],
@@ -36,9 +36,9 @@
       "productUrl": "https://funko.com/gb/search?q=dragon+ball+pop",
       "gallery": [
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwefcc2c8e/images/funko/upload/1/93328_DBZ_S12_VegetaRefresh_POP_GLAM-1-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw562fa201/images/funko/upload/1/93326_DBZ_S12_GokuRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw1d503cf3/images/funko/upload/1/93326_DBZ_S12_GokuRefresh_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw4bdc2afc/images/funko/upload/1/93324_DBZ_S12_FriezaRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
-        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw6a929373/images/funko/upload/1/93325_DBZ_S12_GohanRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
+        "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe63bf79f/images/funko/upload/1/93325_DBZ_S12_GohanRefresh_POP_GLAM-1-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwf90ac9d3/images/funko/upload/1/93327_DBZ_S12_KrillinRefresh_POP_GLAM-WEB.png?sw=800&sh=800",
         "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwe6d21b3a/images/funko/upload/1/94746a_POPAnim_DBS_GokuRed_Render_frontview_glam-WEB.png?sw=800&sh=800"
       ],
@@ -48,22 +48,6 @@
     }
   ],
   "reveals": [
-    {
-      "id": "funko-97579",
-      "fullName": "Pop! Dragon Ball Z (Frieza Saga) 4-Pack",
-      "name": "Dragon Ball Z (Frieza Saga) 4-Pack",
-      "version": "Shop listing",
-      "rarity": "Coming Soon",
-      "setCode": "SOON",
-      "setName": "Coming Soon",
-      "story": "Dragon Ball Z (Frieza Saga) 4-Pack",
-      "type": "Pop!",
-      "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc816dfed/images/funko/upload/1/97579_DBZ_GokuFriezaGohanKrillin_POP_4PK_Glam-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc816dfed/images/funko/upload/1/97579_DBZ_GokuFriezaGohanKrillin_POP_4PK_Glam-WEB.png?sw=800&sh=800",
-      "isExternalReveal": true,
-      "url": "https://funko.com/gb/pop-dragon-ball-z-frieza-saga-4-pack/97579.html"
-    },
     {
       "id": "funko-97598",
       "fullName": "Bitty Pop! & Accessories Goku & Keychain",
@@ -91,10 +75,26 @@
       "story": "Bitty Pop! & Accessories Super Saiyan Goku & Keychain",
       "type": "Pop!",
       "color": "",
-      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfebab651/images/funko/upload/73026b_DragonBallZ_SuperSaiyanGokuFA_BittyPop_Glam-1-WEB.png?sw=346&sh=346",
-      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwfebab651/images/funko/upload/73026b_DragonBallZ_SuperSaiyanGokuFA_BittyPop_Glam-1-WEB.png?sw=800&sh=800",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw0c6b5278/images/funko/upload/1/97599_BittyPOPandKeychain_DBZ_PKG_Glam-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dw0c6b5278/images/funko/upload/1/97599_BittyPOPandKeychain_DBZ_PKG_Glam-WEB.png?sw=800&sh=800",
       "isExternalReveal": true,
       "url": "https://funko.com/gb/bitty-pop-accessories-super-saiyan-goku-keychain/97599.html"
+    },
+    {
+      "id": "funko-97579",
+      "fullName": "Pop! Dragon Ball Z (Frieza Saga) 4-Pack",
+      "name": "Dragon Ball Z (Frieza Saga) 4-Pack",
+      "version": "Shop listing",
+      "rarity": "Coming Soon",
+      "setCode": "SOON",
+      "setName": "Coming Soon",
+      "story": "Dragon Ball Z (Frieza Saga) 4-Pack",
+      "type": "Pop!",
+      "color": "",
+      "thumb": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc816dfed/images/funko/upload/1/97579_DBZ_GokuFriezaGohanKrillin_POP_4PK_Glam-WEB.png?sw=346&sh=346",
+      "full": "https://funko.com/dw/image/v2/BGTS_PRD/on/demandware.static/-/Sites-funko-master-catalog/default/dwc816dfed/images/funko/upload/1/97579_DBZ_GokuFriezaGohanKrillin_POP_4PK_Glam-WEB.png?sw=800&sh=800",
+      "isExternalReveal": true,
+      "url": "https://funko.com/gb/pop-dragon-ball-z-frieza-saga-4-pack/97579.html"
     }
   ],
   "news": [
